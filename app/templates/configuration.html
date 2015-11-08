@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Streams Configuration</h1>
+    <form action="" method="post" name="streamsconfiguration">
+        {{ form.hidden_tag() }}
+        <p>
+            Twitch channel name (separate multiple channels with commas) <br>
+            {{ form.channel(size=50) }} <br>
+            {% for error in form.channel.errors %}
+                <span style="color: red;">[{{ error }}]</span> <br>
+            {% endfor %}
+        </p>
+        <p>{{ form.add() }} {{ form.remove() }}</p>
+    </form>
+
+{% endblock %}

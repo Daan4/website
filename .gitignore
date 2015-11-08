@@ -1,0 +1,18 @@
+# temporary files
+/tmp
+
+# config; an example config is provided in website_config.py.example
+/website_config.py
+
+# virtualenv
+/virtualenv
+
+# migrations
+/migrations
+
+# pycharm files
+/.idea
+
+# pycache
+/app/__pycache__
+/__pycache__

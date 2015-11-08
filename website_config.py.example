@@ -1,0 +1,25 @@
+# Flask-WTF settings
+SECRET_KEY = 'my_super_duper_secret_key'
+
+# Database settings
+DATABASE_USERNAME = 'postgres'
+DATABASE_PASSWORD = 'postgres'
+DATABASE_HOST = 'localhost'
+DATABASE_NAME = 'database'
+SQLALCHEMY_DATABASE_URI = 'postgresql://{}:{}@{}/{}'.format(DATABASE_USERNAME,
+                                                            DATABASE_PASSWORD,
+                                                            DATABASE_HOST,
+                                                            DATABASE_NAME)
+
+# Mail settings
+MAIL_HOST = "localhost"
+MAIL_PORT = "25"
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+
+# Admin emails
+ADMINS = ['you@example.com']
+
+# Twitch settings
+TWITCH_API_CLIENT_ID = 'twitch_client_id'
+TWITCH_API_CLIENT_SECRET = 'twitch_client_secret'

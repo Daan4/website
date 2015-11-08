@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='icon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    {% if title %}
+    <title>{{ title }} - www.daanlubbers.nl</title>
+    {% else %}
+    <title>www.daanlubbers.nl</title>
+    {% endif %}
+</head>
+<body>
+    <ul id="navigation_bar">
+        <li class="menu_item"><a href="/index" class="menu_item">Home</a></li>
+        <li class="menu_item"><a href="https://github.com/ziel980" class="menu_item">GitHub</a></li>
+        <li class="menu_item"><a href="/projects" class="menu_item">Projects</a></li>
+        <li class="menu_item"><a href="/streams" class="menu_item">Streams</a></li>
+        {% if not current_user.is_authenticated %}
+            <li class="menu_item"><a href="/login" class="menu_item">Log in</a></li>
+        {% else %}
+            <li class="menu_item"><a href="/configuration" class="menu_item">Configuration</a></li>
+            <li class="menu_item"><a href="/logout" class="menu_item">Log out</a></li>
+        {% endif %}
+    </ul>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul id="flash_list">
+                {% for message in messages %}
+                <li><div class="flash">>{{ message }}<</div></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer"><hr>© Daan Lubbers 2015. Rendered by <a class="footer" href="http://flask.pocoo.org/">Flask</a> in __EXECUTION_TIME__.<br></div>
+</body>
+</html>

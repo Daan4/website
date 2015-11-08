@@ -1,0 +1,28 @@
+/* stream button / refresh button style */
+.stream_channel, .refresh_button_text {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+}
+
+.stream_online {
+    color: red;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.stream_offline {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.stream_button, .refresh_button {
+    background-color: #7911BA;
+    border-style: none;
+}
+
+.stream_button:hover, .stream_button:active, .refresh_button:hover, .refresh_button.active {
+    background-color: #7A991A;
+}
