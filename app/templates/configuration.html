@@ -1,16 +1,10 @@
 {% extends "base.html" %}
+{% set current_page = "configuration" %}
 {% block content %}
-    <h1>Streams Configuration</h1>
-    <form action="" method="post" name="streamsconfiguration">
-        {{ form.hidden_tag() }}
-        <p>
-            Twitch channel name (separate multiple channels with commas) <br>
-            {{ form.channel(size=50) }} <br>
-            {% for error in form.channel.errors %}
-                <span style="color: red;">[{{ error }}]</span> <br>
-            {% endfor %}
-        </p>
-        <p>{{ form.add() }} {{ form.remove() }}</p>
-    </form>
-
+    <ul id="navigation_bar">
+        <li class="menu_item"><a class="menu_item" href="/configuration_streams">Streams</a></li>
+        <li class="menu_item"><a class="menu_item" href="/configuration_projects">Projects</a></li>
+    </ul>
+    <hr>
+    {% block configuration %}{% endblock %}
 {% endblock %}

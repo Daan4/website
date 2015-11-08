@@ -1,10 +1,8 @@
 import time
-
 from flask import render_template, redirect, session, url_for, request, g, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import UnmappedInstanceError
-
 from app import app, lm
 from .forms import *
 from .models import *
@@ -37,7 +35,6 @@ def login():
             login_user(user, remember=remember_me)
             flash('User {} logged in.'.format(username))
             next_view = request.args.get('next')
-            print(next_view)
             if not next_view or next_view == '/logout':
                 return redirect(url_for('index'))
             else:
@@ -102,15 +99,21 @@ def configuration():
     return render_template('configuration.html', title='Configuration', form=form)
 
 
+@app.route('/configuration_streams', methods=['GET', 'POST'])
+@login_required
+def configuration_streams():
+    pass
+
+
 @app.errorhandler(404)
 def not_found_error(error):
-    return render_template('404.html'), 404
+    return render_template('404.html', title='404'), 404
 
 
 @app.errorhandler(500)
 def internal_error(error):
     db.session.rollback()
-    return render_template('500.html'), 500
+    return render_template('500.html', title='500'), 500
 
 
 @app.before_request

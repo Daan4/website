@@ -31,7 +31,19 @@ a.menu_item:link, a.menu_item:visited {
     text-transform: uppercase;
 }
 
-a.menu_item:hover, a.menu_item:active {
+a.active_menu_item:link, a.active_menu_item:visited {
+    display: block;
+    width: 150px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #18ABDB;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+a.menu_item:hover, a.menu_item:active, a.active_menu_item:hover, a.active_menu_item:active {
     background-color: #7A991A;
 }
 

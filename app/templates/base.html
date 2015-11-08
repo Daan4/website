@@ -13,7 +13,11 @@
 <body>
     <ul class="navigation_bar">
     {% for item in nav.bars['base'] %}
-        <li class="menu_item"><a class="menu_item" href="{{ item.href }}">{{ item.caption }}</a></li>
+        {% if item.is_active() %}
+            <li class="menu_item">
+                <a {% if item.id == current_page %} class="active_menu_item" {% else %} class="menu_item" {% endif %} href="{{ item.href }}">{{ item.caption }}</a>
+            </li>
+        {% endif %}
     {% endfor %}
     </ul>
     <hr>
