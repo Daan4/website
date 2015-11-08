@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-
 from config import *
 
 # Flask
@@ -17,8 +16,25 @@ lm.init_app(app)
 lm.login_view = 'login'
 
 
+# navigation
+from app import navigation
+nav = navigation.Navigation(app)
+navigation.init_navigation(nav)
+
+
 # Error handling
 import logging
+
+# if not app.debug:
+#     # Via email
+#     from logging.handlers import SMTPHandler
+#     credentials = None
+#     if MAIL_USERNAME or MAIL_PASSWORD:
+#         credentials = (MAIL_USERNAME, MAIL_PASSWORD)
+#     mail_handler = SMTPHandler((MAIL_SERVER, MAIL_PORT), 'no-reply@' + MAIL_SERVER, ADMINS, 'www.daanlubbers.nl failure', credentials)
+#     mail_handler.setLevel(logging.ERROR)
+#     app.logger.addHandler(mail_handler)
+
 from logging.handlers import RotatingFileHandler
 
 
@@ -30,16 +46,6 @@ class DebugRotatingFileHandler(RotatingFileHandler):
         if not record.levelno == logging.DEBUG:
             return
         RotatingFileHandler.emit(self, record)
-
-# if not app.debug:
-#     # Via email
-#     from logging.handlers import SMTPHandler
-#     credentials = None
-#     if MAIL_USERNAME or MAIL_PASSWORD:
-#         credentials = (MAIL_USERNAME, MAIL_PASSWORD)
-#     mail_handler = SMTPHandler((MAIL_SERVER, MAIL_PORT), 'no-reply@' + MAIL_SERVER, ADMINS, 'www.daanlubbers.nl failure', credentials)
-#     mail_handler.setLevel(logging.ERROR)
-#     app.logger.addHandler(mail_handler)
 
 # Via file
 # INFO or higher

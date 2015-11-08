@@ -11,17 +11,10 @@
     {% endif %}
 </head>
 <body>
-    <ul id="navigation_bar">
-        <li class="menu_item"><a href="/index" class="menu_item">Home</a></li>
-        <li class="menu_item"><a href="https://github.com/ziel980" class="menu_item">GitHub</a></li>
-        <li class="menu_item"><a href="/projects" class="menu_item">Projects</a></li>
-        <li class="menu_item"><a href="/streams" class="menu_item">Streams</a></li>
-        {% if not current_user.is_authenticated %}
-            <li class="menu_item"><a href="/login" class="menu_item">Log in</a></li>
-        {% else %}
-            <li class="menu_item"><a href="/configuration" class="menu_item">Configuration</a></li>
-            <li class="menu_item"><a href="/logout" class="menu_item">Log out</a></li>
-        {% endif %}
+    <ul class="navigation_bar">
+    {% for item in nav.bars['base'] %}
+        <li class="menu_item"><a class="menu_item" href="{{ item.href }}">{{ item.caption }}</a></li>
+    {% endfor %}
     </ul>
     <hr>
     {% with messages = get_flashed_messages() %}

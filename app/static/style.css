@@ -39,7 +39,7 @@ li.menu_item {
     float: left;
 }
 
-ul#navigation_bar, ul#flash_list {
+ul.navigation_bar, ul#flash_list {
     list-style-type: none;
     margin: 0;
     padding: 0;
