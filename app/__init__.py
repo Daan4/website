@@ -62,9 +62,4 @@ app.logger.addHandler(file_handler)
 app.logger.info('website startup')
 app.logger.debug('website startup')
 
-# Start stream info update
-from app import stream_api
-if not CHANGING_DATABASE:
-    stream_api.enable_updates(STREAM_UPDATE_INTERVAL)
-
 from app import views, models
