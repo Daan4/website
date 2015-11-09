@@ -23,6 +23,9 @@ class Bar:
         self.name = name
         self.items = items if items else []
 
+    def add_item(self, item):
+        self.items.append(item)
+
 
 class Item:
     def __init__(self, href, id, caption, *constraints):
@@ -51,4 +54,9 @@ def init_navigation(nav):
         Item('/adminpanel', 'adminpanel', 'Admin Panel', CONSTRAINT_LOGIN),
         Item('/login', 'login', 'Log in', CONSTRAINT_LOGOUT),
         Item('/logout', 'logout', 'Log out', CONSTRAINT_LOGIN)
+    ]))
+
+    nav.add_bar(Bar('adminpanel', [
+        Item('/adminpanel/projects', 'adminpanel/projects', 'Projects'),
+        Item('/adminpanel/streams', 'adminpanel/streams', 'Streams')
     ]))

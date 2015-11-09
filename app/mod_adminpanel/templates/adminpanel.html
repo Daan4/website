@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% set current_page = "adminpanel" %}
 {% block content %}
-ADMIN PANEL
+<ul class="navigation_bar">
+    {% for item in nav.bars['adminpanel'] %}
+        {% if item.is_active() %}
+            <li class="menu_item">
+                <a class="menu_item" href="{{ item.href }}">{{ item.caption }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
 {% endblock %}
