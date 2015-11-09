@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 {% set current_page = "configuration" %}
 {% block content %}
-    <ul id="navigation_bar">
-        <li class="menu_item"><a class="menu_item" href="/configuration_streams">Streams</a></li>
-        <li class="menu_item"><a class="menu_item" href="/configuration_projects">Projects</a></li>
+    <ul class="navigation_bar">
+        {% for item in nav.bars['configuration'] %}
+            {% if item.is_active() %}
+            <li class="menu_item">
+                <a class="menu_item" href="{{ item.href }} ">{{ item.caption }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
     </ul>
-    <hr>
     {% block configuration %}{% endblock %}
 {% endblock %}

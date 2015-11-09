@@ -44,10 +44,16 @@ class Item:
 
 
 def init_navigation(nav):
-    nav.add_bar(Bar('base', [Item('/index', 'index', 'Home'),
-                             Item('/projects', 'projects', 'Projects'),
-                             Item('/streams', 'streams', 'Streams'),
-                             Item('/configuration', 'configuration', 'Configuration', CONSTRAINT_LOGIN),
-                             Item('/login', 'login', 'Log in', CONSTRAINT_LOGOUT),
-                             Item('/logout', 'logout', 'Log out', CONSTRAINT_LOGIN)
-                             ]))
+    nav.add_bar(Bar('base', [
+        Item('/index', 'index', 'Home'),
+        Item('/projects', 'projects', 'Projects'),
+        Item('/streams', 'streams', 'Streams'),
+        Item('/configuration', 'configuration', 'Configuration', CONSTRAINT_LOGIN),
+        Item('/login', 'login', 'Log in', CONSTRAINT_LOGOUT),
+        Item('/logout', 'logout', 'Log out', CONSTRAINT_LOGIN)
+    ]))
+
+    nav.add_bar(Bar('configuration', [
+        Item('/configuration_streams', 'streams', 'Streams'),
+        Item('/configuration_projects', 'projects', 'Projects')
+    ]))
