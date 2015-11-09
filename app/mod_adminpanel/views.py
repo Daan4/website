@@ -14,4 +14,4 @@ def index():
 @mod_adminpanel.route('/<config_name>', methods=['GET', 'POST'])
 @login_required
 def configure_module(config_name):
-    return redirect(url_for('{}.adminpanel'.format(config_name)))
+    return render_template('{}_config.html'.format(config_name))

@@ -24,9 +24,3 @@ def index():
                            title='Streams',
                            streams=all_streams,
                            active_stream=active_stream)
-
-
-@mod_streams.route('/adminpanel')
-@login_required
-def adminpanel():
-    return render_template("streams_config.html")

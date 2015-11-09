@@ -10,9 +10,3 @@ mod_projects = Blueprint('projects', __name__, url_prefix='/projects', template_
 @mod_projects.route('/', methods=['GET'])
 def index():
     return render_template('projects.html', title="Projects")
-
-
-@mod_projects.route('/adminpanel')
-@login_required
-def adminpanel():
-    return render_template("projects_config.html")
