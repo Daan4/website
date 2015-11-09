@@ -8,7 +8,6 @@ mod_streams = Blueprint('streams', __name__, url_prefix='/streams')
 
 
 @mod_streams.route('/', methods=['GET', 'POST'])
-
 def streams():
     all_streams = Stream.query.order_by(Stream.is_online.desc(),
                                         Stream.viewers.desc()).all()
@@ -20,7 +19,7 @@ def streams():
             active_stream = None
             stream_api.update_stream_info(auto_update=False)
             flash("Stream info refreshed!")
-    return render_template('streams.html',
+    return render_template('streams/streams.html',
                            title='Streams',
                            streams=all_streams,
                            active_stream=active_stream)
