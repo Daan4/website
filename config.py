@@ -24,6 +24,3 @@ ADMINS = c.ADMINS
 
 # stream_api.py
 STREAM_UPDATE_INTERVAL = 300
-
-# used by db_ scripts
-CHANGING_DATABASE = False
