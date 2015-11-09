@@ -12,14 +12,13 @@
 </head>
 <body>
     <ul class="navigation_bar">
-    {% for item in nav.bars['base'] %}
-        {% if item.is_active() %}
+        {% for item in nav.base %}
             <li class="menu_item">
-                <a {% if item.id == current_page %} class="active_menu_item" {% else %} class="menu_item" {% endif %} href="{{ item.href }}">{{ item.caption }}</a>
+                <a class="menu_item" href="{{ item.url }}">{{ item.label }}</a>
             </li>
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
     </ul>
+
     <hr>
     {% with messages = get_flashed_messages() %}
         {% if messages %}

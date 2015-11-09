@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_navigation import Navigation
 from config import *
 
 # Flask
@@ -16,9 +17,24 @@ lm.init_app(app)
 lm.login_view = 'login'
 
 # navigation
-from app import navigation
-nav = navigation.Navigation(app)
-navigation.init_navigation(nav)
+# from app import navigation
+# nav = navigation.Navigation(app)
+# navigation.init_navigation(nav)
+nav = Navigation(app)
+nav.Bar('base', [
+    nav.Item('Home', 'index'),
+    nav.Item('Projects', 'projects.index'),
+    nav.Item('Streams', 'streams.index'),
+    nav.Item('Admin Panel', 'adminpanel.index'),
+    nav.Item('Log in', 'login'),
+    nav.Item('Log out', 'logout')
+])
+
+nav.Bar('adminpanel', [
+    nav.Item('Projects', 'adminpanel.configure_module', {'bp_name': 'projects'}),
+    nav.Item('Streams', 'adminpanel.configure_module', {'bp_name': 'streams'})
+])
+
 
 
 # Error handling
