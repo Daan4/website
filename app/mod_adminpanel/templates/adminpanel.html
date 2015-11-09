@@ -5,9 +5,10 @@
     {% for item in nav.bars['adminpanel'] %}
         {% if item.is_active() %}
             <li class="menu_item">
-                <a class="menu_item" href="{{ item.href }}">{{ item.caption }}</a>
+                <a {% if item.id == current_adminpanel %} class="active_menu_item" {% else %} class="menu_item" {% endif %} href="{{ item.href }}">{{ item.caption }}</a>
             </li>
         {% endif %}
     {% endfor %}
 </ul>
+{% block configuration %}{% endblock %}
 {% endblock %}

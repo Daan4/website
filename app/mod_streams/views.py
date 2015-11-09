@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, flash,\
     g, session, redirect, url_for
 from app import db
+from flask_login import login_required
 from app.mod_streams.models import Stream
 from app.mod_streams import stream_api
 
@@ -23,3 +24,9 @@ def index():
                            title='Streams',
                            streams=all_streams,
                            active_stream=active_stream)
+
+
+@mod_streams.route('/adminpanel')
+@login_required
+def adminpanel():
+    return render_template("streams_config.html")

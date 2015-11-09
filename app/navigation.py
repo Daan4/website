@@ -57,6 +57,6 @@ def init_navigation(nav):
     ]))
 
     nav.add_bar(Bar('adminpanel', [
-        Item('/adminpanel/projects', 'adminpanel/projects', 'Projects'),
-        Item('/adminpanel/streams', 'adminpanel/streams', 'Streams')
+        Item('/adminpanel/projects', 'projects', 'Projects'),
+        Item('/adminpanel/streams', 'streams', 'Streams')
     ]))
