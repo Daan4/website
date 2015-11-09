@@ -14,10 +14,7 @@
 /.idea
 
 # pycache
-/app/__pycache__
-/__pycache__
-/mod_projects/__pycache__
-/mod_streams/__pycache__
+__pycache__/
 
 # cmd commands and database password
 how to create db.txt
