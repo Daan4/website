@@ -7,9 +7,3 @@ class LoginForm(Form):
     username = StringField('username', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
     remember_me = BooleanField('remember_me', default=False)
-
-
-class StreamConfigurationForm(Form):
-    channel = StringField('channel', validators=[DataRequired()])
-    add = SubmitField('add')
-    remove = SubmitField('remove')

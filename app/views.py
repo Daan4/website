@@ -1,12 +1,9 @@
 import time
-
-from app import app, lm
+from app import app, lm, db
 from flask import render_template, redirect, session, url_for, request, g, flash
 from flask_login import login_user, logout_user, current_user, login_required
-from sqlalchemy.exc import IntegrityError, InvalidRequestError
-from sqlalchemy.orm.exc import UnmappedInstanceError
-from .forms import *
-from .models import *
+from .forms import LoginForm
+from .models import User
 
 
 @app.route('/')
@@ -47,33 +44,6 @@ def logout():
     else:
         flash('Logout failed: no user was logged in.')
     return redirect(url_for('index'))
-
-
-@app.route('/configuration', methods=['GET', 'POST'])
-@login_required
-def configuration():
-    # form = StreamConfigurationForm()
-    # if form.validate_on_submit():
-    #     channels = form.channel.data.split(',')
-    #     if form.add.data:
-    #         for channel in channels:
-    #             stream = Stream(channel=channel)
-    #             try:
-    #                 db.session.add(stream)
-    #                 db.session.commit()
-    #                 flash('Channel {} added.'.format(channel))
-    #             except (IntegrityError, InvalidRequestError):
-    #                 flash('Channel {} already exists in the database'.format(channel))
-    #     elif form.remove.data:
-    #         for channel in channels:
-    #             stream = Stream.query.filter_by(channel=channel).first()
-    #             try:
-    #                 db.session.delete(stream)
-    #                 db.session.commit()
-    #                 flash('Channel {} removed.'.format(channel))
-    #             except UnmappedInstanceError:
-    #                 flash('Channel {} doesn\'t exist in the database'.format(channel))
-    return render_template('configuration.html', title='Configuration', form=form)
 
 
 @app.errorhandler(404)

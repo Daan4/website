@@ -1,15 +1,28 @@
 {% extends "base.html" %}
 {% set current_page = "adminpanel" %}
 {% block content %}
-<ul class="navigation_bar">
-    {% for item in nav.bars['adminpanel'] %}
-        {% if item.is_active() %}
+    <ul class="navigation_bar">
+        {% for item in nav.adminpanel %}
             <li class="menu_item">
-                <a {% if item.id == current_adminpanel %} class="active_menu_item" {% else %} class="menu_item" {% endif %} href="{{ item.href }}">{{ item.caption }}</a>
+                <a class="menu_item" href="{{ item.url }}">{{ item.label }}</a>
             </li>
-        {% endif %}
-    {% endfor %}
-</ul>
-<hr>
+        {% endfor %}
+    </ul>
+    <hr>
 {% block configuration %}{% endblock %}
+    {% if form %}
+        <form action="" method="post" name="config">
+            {{ form.hidden_tag() }}
+            <p>
+                Channels<br>
+                {{ form.channel(size=100) }} <br>
+            </p>
+            <p>
+                {{ form.add() }} <br>
+            </p>
+            <p>
+                {{ form.remove() }} <br>
+            </p>
+        </form>
+    {% endif %}
 {% endblock %}

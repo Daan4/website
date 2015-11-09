@@ -1,6 +1,8 @@
 from flask import Blueprint, request, render_template, flash,\
     g, session, redirect, url_for
 from app import db
+from sqlalchemy.exc import IntegrityError, InvalidRequestError
+from sqlalchemy.orm.exc import UnmappedInstanceError
 from flask_login import login_required
 from app.mod_streams.models import Stream
 from app.mod_streams import stream_api
@@ -24,3 +26,27 @@ def index():
                            title='Streams',
                            streams=all_streams,
                            active_stream=active_stream)
+
+
+def do_config_logic(form):
+    channels = []
+    if form.channel.data:
+        channels = form.channel.data.split(',')
+    if form.add.data:
+        for channel in channels:
+            stream = Stream(channel=channel)
+            try:
+                db.session.add(stream)
+                db.session.commit()
+                flash('Channel {} added'.format(channel))
+            except (IntegrityError, InvalidRequestError):
+                flash('Channel {} already exists in the database'.format(channel))
+    elif form.remove.data:
+        for channel in channels:
+            stream = Stream.query.filter_by(channel=channel).first()
+            try:
+                db.session.delete(stream)
+                db.session.commit()
+                flash('Channel {} removed.'.format(channel))
+            except UnmappedInstanceError:
+                flash('Channel {} doesn\'t exist in the database'.format(channel))
