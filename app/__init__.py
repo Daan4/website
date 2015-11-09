@@ -62,7 +62,7 @@ app.logger.info('website startup')
 app.logger.debug('website startup')
 
 # Register blueprints
-from app.projects.views import projects as projects_module
+from app.mod_projects.views import mod_projects as projects_module
 app.register_blueprint(projects_module)
 
 from app import views, models
