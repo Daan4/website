@@ -11,7 +11,7 @@ from .models import *
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', title="Home")
 
 
 @app.route('/login', methods=['GET', 'POST'])
