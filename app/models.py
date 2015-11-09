@@ -2,8 +2,14 @@ from app import db
 from sqlalchemy_utils import PasswordType
 
 
-class User(db.Model):
+class Base(db.Model):
+    __abstract__ = True
     id = db.Column(db.Integer, primary_key=True)
+    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
+    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+
+
+class User(Base):
     username = db.Column(db.String(64), index=True, unique=True)
     password = db.Column(PasswordType(schemes=['pbkdf2_sha512']))
 
@@ -26,8 +32,7 @@ class User(db.Model):
         return '<User {}>'.format(self.username)
 
 
-class Stream(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+class Stream(Base):
     channel = db.Column(db.String(64), index=True, unique=True)
     is_online = db.Column(db.Boolean)
     game = db.Column(db.String(128), index=True)
