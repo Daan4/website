@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template,flash,\
+from flask import Blueprint, request, render_template, flash,\
     g, session, redirect, url_for
 from app import db
 from app.mod_streams.models import Stream
@@ -8,7 +8,7 @@ mod_streams = Blueprint('streams', __name__, url_prefix='/streams', template_fol
 
 
 @mod_streams.route('/', methods=['GET', 'POST'])
-def streams():
+def index():
     all_streams = Stream.query.order_by(Stream.is_online.desc(),
                                         Stream.viewers.desc()).all()
     active_stream = None
