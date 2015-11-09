@@ -1,5 +1,4 @@
 from flask_wtf import Form
-from app import stream_api
 from wtforms import StringField, BooleanField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
 

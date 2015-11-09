@@ -1,8 +1,8 @@
 import urllib.request
 import json
 from urllib.error import URLError
-from app import app
-from .models import *
+from app import app, db
+from app.mod_streams.models import Stream
 import threading
 import website_config as c
 

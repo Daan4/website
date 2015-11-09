@@ -1,7 +1,8 @@
-from app import db, models
+from app import db
+from app.models import Base
 
 
-class Project(models.Base):
+class Project(Base):
     name = db.Column(db.Text, index=True, unique=True)
     content = db.Column(db.Text)
 
