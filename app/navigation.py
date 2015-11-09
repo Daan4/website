@@ -45,7 +45,7 @@ class Item:
 
 def init_navigation(nav):
     nav.add_bar(Bar('base', [
-        Item('/index', 'index', 'Home'),
+        Item('/', 'index', 'Home'),
         Item('/projects', 'projects', 'Projects'),
         Item('/streams', 'streams', 'Streams'),
         Item('/configuration', 'configuration', 'Configuration', CONSTRAINT_LOGIN),
