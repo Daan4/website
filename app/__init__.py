@@ -15,7 +15,6 @@ lm = LoginManager()
 lm.init_app(app)
 lm.login_view = 'login'
 
-
 # navigation
 from app import navigation
 nav = navigation.Navigation(app)
@@ -61,5 +60,9 @@ file_handler.setLevel(logging.DEBUG)
 app.logger.addHandler(file_handler)
 app.logger.info('website startup')
 app.logger.debug('website startup')
+
+# Register blueprints
+from app.projects.views import projects as projects_module
+app.register_blueprint(projects_module)
 
 from app import views, models

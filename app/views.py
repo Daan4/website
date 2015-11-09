@@ -14,11 +14,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/projects')
-def projects():
-    return render_template('projects.html', title='Projects')
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if g.user is not None and g.user.is_authenticated:
@@ -97,12 +92,6 @@ def configuration():
                 except UnmappedInstanceError:
                     flash('Channel {} doesn\'t exist in the database'.format(channel))
     return render_template('configuration.html', title='Configuration', form=form)
-
-
-@app.route('/configuration_streams', methods=['GET', 'POST'])
-@login_required
-def configuration_streams():
-    pass
 
 
 @app.errorhandler(404)
