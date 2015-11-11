@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired
 
 # Used by mod_adminpanel module to show configuration form in the admin panel.
 class ConfigForm(Form):
-    project = StringField('project', validators=[DataRequired()])
-    content = TextAreaField('project_content', validators=[DataRequired()])
-    add = SubmitField('add')
-    remove = SubmitField('remove')
+    project = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content', validators=[DataRequired()])
+    add = SubmitField('Add')
+    remove = SubmitField('Remove')

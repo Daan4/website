@@ -5,6 +5,6 @@ from wtforms.validators import DataRequired
 
 # Used by mod_adminpanel module to show configuration form in the admin panel.
 class ConfigForm(Form):
-    channel = StringField('channel', validators=[DataRequired()])
-    add = SubmitField('add')
-    remove = SubmitField('remove')
+    channel = StringField('Twitch channel(s)', validators=[DataRequired()])
+    add = SubmitField('Add')
+    remove = SubmitField('Remove')

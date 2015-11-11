@@ -2,4 +2,8 @@
 {% set current_page = "projects" %}
 {% block content %}
     Projects
+    {% for project in projects %}
+        <h1>{{ project.name }}</h1>
+        {{ project.content }}
+    {% endfor %}
 {% endblock %}
