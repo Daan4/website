@@ -3,6 +3,7 @@ from flask import Blueprint, request, render_template, flash,\
 from app import app
 from flask_login import login_required
 import importlib
+from .forms import ConfigForm
 
 mod_adminpanel = Blueprint('adminpanel', __name__, url_prefix='/adminpanel', template_folder='templates')
 
@@ -49,3 +50,7 @@ def setup_navigation(nav):
     # Create navigation bar
     items = [nav.Item(x, 'adminpanel.configure_module', {'bp_name': x}) for x in items_to_add]
     nav.Bar('adminpanel', items)
+
+
+def do_config_form_logic(form):
+    pass
