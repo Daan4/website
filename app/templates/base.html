@@ -14,7 +14,12 @@
     <ul class="navigation_bar">
         {% for item in nav.base %}
             <li class="menu_item">
-                <a class="menu_item" href="{{ item.url }}">{{ item.label }}</a>
+                <a {% if current_page == item.label.lower() %}
+                       class="active_menu_item"
+                   {% else %}
+                   class="menu_item"
+                   {% endif %}
+                   href="{{ item.url }}">{{ item.label }}</a>
             </li>
         {% endfor %}
     </ul>
