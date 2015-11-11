@@ -17,13 +17,16 @@ def index():
 @login_required
 def configure_module(bp_name):
     # Check if a blueprint with the given name exists before continuing
-    if bp_name not in app.blueprints.keys():
+    module = None
+    for name, blueprint in app.blueprints.items():
+        if name == bp_name:
+            module = importlib.import_module(blueprint.import_name)
+            break
+    if not module:
         abort(404)
-    module_forms = importlib.import_module('app.mod_{}.forms'.format(bp_name))
-    module_views = importlib.import_module('app.mod_{}.views'.format(bp_name))
-    form = module_forms.ConfigForm()
+    form = module.ConfigForm()
     if form.validate_on_submit():
-        module_views.do_config_form_logic(form)
+        module.do_config_form_logic(form)
     return render_template('{}_config.html'.format(bp_name), form=form)
 
 
