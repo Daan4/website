@@ -9,8 +9,25 @@
     {% else %}
     <title>www.daanlubbers.nl</title>
     {% endif %}
+    <script>
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('digital_clock').innerHTML =
+            h + ":" + m + ":" + s;
+            var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};
+            return i;
+        }
+    </script>
 </head>
-<body>
+<body onload="startTime()">
     <ul class="navigation_bar">
         {% for item in nav.base %}
             {% if item.html_attrs['hide_when'] == 'login' %}
@@ -39,8 +56,8 @@
             </li>
         {% endfor %}
     </ul>
-
-    <hr>
+    <span id="digital_clock"></span>
+    <br><hr>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul id="flash_list">

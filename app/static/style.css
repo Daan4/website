@@ -56,6 +56,7 @@ li.hidden_menu_item {
 
 ul.navigation_bar, ul#flash_list {
     list-style-type: none;
+    display: inline;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -74,4 +75,12 @@ a.footer:link, a.footer:visited {
 
 a.footer:hover, a.footer:active {
     background-color: #BDBDBD;
+}
+
+/* digital clock */
+span#digital_clock {
+    display: inline;
+    color: white;
+    font-weight: bold;
+    font-size: 20pt;
 }
