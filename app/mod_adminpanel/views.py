@@ -52,5 +52,6 @@ def setup_navigation(nav):
     nav.Bar('adminpanel', items)
 
 
+# No config options yet
 def do_config_form_logic(form):
     pass
