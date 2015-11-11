@@ -1,14 +1,15 @@
 import time
-from app import app, lm, db
+from app import app, lm, db, nav
 from flask import render_template, redirect, session, url_for, request, g, flash
-from flask_login import login_user, logout_user, current_user, login_required
+from flask_login import login_user, logout_user, current_user, login_required,\
+    user_logged_in, user_logged_out
 from .forms import LoginForm
 from .models import User
 
 
 @app.route('/')
 def index():
-    return render_template('index.html', )
+    return render_template('index.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -59,6 +60,7 @@ def internal_error(error):
 
 @app.before_request
 def before_request():
+    # Save current time to be used after the request to display the time the request took to complete.
     g.user = current_user
     g.start_time = time.time()
 

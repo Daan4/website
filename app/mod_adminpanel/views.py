@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, flash,\
     g, session, redirect, url_for, abort
 from app import app
+from flask_navigation.navbar import NavigationBar
 from flask_login import login_required
 import importlib
 from .forms import ConfigForm

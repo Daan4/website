@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_login import LoginManager
+from flask_login import LoginManager, user_logged_in, user_logged_out
 from flask_sqlalchemy import SQLAlchemy
 from flask_navigation import Navigation
 
@@ -30,9 +30,9 @@ nav.Bar('base', [
     nav.Item('Home', 'index'),
     nav.Item('Projects', 'projects.index'),
     nav.Item('Streams', 'streams.index'),
-    nav.Item('Admin Panel', 'adminpanel.index'),
-    nav.Item('Log in', 'login'),
-    nav.Item('Log out', 'logout')
+    nav.Item('Admin Panel', 'adminpanel.index', html_attrs={'hide_when': 'logout'}),
+    nav.Item('Log in', 'login', html_attrs={'hide_when': 'login'}),
+    nav.Item('Log out', 'logout', html_attrs={'hide_when': 'logout'})
 ])
 # Create adminpanel navigation bar
 from app.mod_adminpanel.views import setup_navigation

@@ -13,9 +13,27 @@
 <body>
     <ul class="navigation_bar">
         {% for item in nav.base %}
-            <li class="menu_item">
-                <a class="{{ 'active_menu_item' if item.is_active else 'menu_item' }}"
-                   href="{{ item.url }}">
+            {% if item.html_attrs['hide_when'] == 'login' %}
+                {% if g.user and g.user.is_authenticated %}
+                    <li class="hidden_menu_item">
+                {% else %}
+                    <li class="menu_item">
+                {% endif %}
+            {% elif item.html_attrs['hide_when'] == 'logout' %}
+                {% if not(g.user and g.user.is_authenticated) %}
+                    <li class="hidden_menu_item">
+                {% else %}
+                    <li class="menu_item">
+                {% endif %}
+            {% else %}
+                <li class="menu_item">
+            {% endif %}
+                <a class="{% if item.is_active %}
+                          active_menu_item
+                          {% else %}
+                          menu_item
+                          {% endif %}"
+                href="{{ item.url }}">
                     {{ item.label }}
                 </a>
             </li>
