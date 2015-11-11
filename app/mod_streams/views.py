@@ -6,6 +6,7 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from flask_login import login_required
 from app.mod_streams.models import Stream
 from app.mod_streams import stream_api
+from .forms import ConfigForm
 
 mod_streams = Blueprint('streams', __name__, url_prefix='/streams', template_folder='templates')
 
@@ -29,7 +30,7 @@ def index():
 
 
 # Used by mod_adminpanel module to do configuration form logic.
-def do_config_logic(form):
+def do_config_form_logic(form):
     channels = []
     if form.channel.data:
         channels = form.channel.data.split(',')

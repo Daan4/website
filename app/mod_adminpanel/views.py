@@ -23,5 +23,26 @@ def configure_module(bp_name):
     module_views = importlib.import_module('app.mod_{}.views'.format(bp_name))
     form = module_forms.ConfigForm()
     if form.validate_on_submit():
-        module_views.do_config_logic(form)
+        module_views.do_config_form_logic(form)
     return render_template('{}_config.html'.format(bp_name), form=form)
+
+
+# Sets up a navigation menu item for each module with mod_adminpanel integration.
+# Called once during app.__init__ after blueprints are registered.
+def setup_navigation(nav):
+    items_to_add = []
+    for name, blueprint in app.blueprints.items():
+        module = importlib.import_module(blueprint.import_name)
+        # Check if blueprint has a form named ConfigForm.
+        # Check if blueprint has a function named do_config_form_logic.
+        # If both of those are implemented then the module should have an adminpanel page.
+        try:
+            module.ConfigForm
+            module.do_config_form_logic
+        except AttributeError as e:
+            continue
+        items_to_add.append(name)
+
+    # Create navigation bar
+    items = [nav.Item(x, 'adminpanel.configure_module', {'bp_name': x}) for x in items_to_add]
+    nav.Bar('adminpanel', items)

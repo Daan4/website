@@ -16,7 +16,15 @@ lm = LoginManager()
 lm.init_app(app)
 lm.login_view = 'login'
 
-# navigation
+# Register blueprints
+from app.mod_projects.views import mod_projects as projects_module
+from app.mod_streams.views import mod_streams as streams_module
+from app.mod_adminpanel.views import mod_adminpanel as adminpanel_module
+app.register_blueprint(projects_module)
+app.register_blueprint(streams_module)
+app.register_blueprint(adminpanel_module)
+
+# Flask-Navigation
 # from app import navigation
 # nav = navigation.Navigation(app)
 # navigation.init_navigation(nav)
@@ -30,11 +38,12 @@ nav.Bar('base', [
     nav.Item('Log out', 'logout')
 ])
 
-nav.Bar('adminpanel', [
-    nav.Item('Projects', 'adminpanel.configure_module', {'bp_name': 'projects'}),
-    nav.Item('Streams', 'adminpanel.configure_module', {'bp_name': 'streams'})
-])
-
+# nav.Bar('adminpanel', [
+#     nav.Item('Projects', 'adminpanel.configure_module', {'bp_name': 'projects'}),
+#     nav.Item('Streams', 'adminpanel.configure_module', {'bp_name': 'streams'})
+# ])
+from app.mod_adminpanel.views import setup_navigation
+setup_navigation(nav)
 
 
 # Error handling
@@ -76,13 +85,5 @@ file_handler.setLevel(logging.DEBUG)
 app.logger.addHandler(file_handler)
 app.logger.info('website startup')
 app.logger.debug('website startup')
-
-# Register blueprints
-from app.mod_projects.views import mod_projects as projects_module
-from app.mod_streams.views import mod_streams as streams_module
-from app.mod_adminpanel.views import mod_adminpanel as adminpanel_module
-app.register_blueprint(projects_module)
-app.register_blueprint(streams_module)
-app.register_blueprint(adminpanel_module)
 
 from app import views, models

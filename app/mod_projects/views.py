@@ -5,6 +5,7 @@ from app import db
 from app.mod_projects.models import Project
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import UnmappedInstanceError
+from .forms import ConfigForm
 
 mod_projects = Blueprint('projects', __name__, url_prefix='/projects', template_folder='templates')
 
@@ -16,7 +17,7 @@ def index():
 
 
 # Used by mod_adminpanel module to do configuration form logic.
-def do_config_logic(form):
+def do_config_form_logic(form):
     project_data = form.project.data
     content_data = form.content.data
     if form.add.data:

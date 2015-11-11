@@ -14,7 +14,9 @@
             </li>
         {% endfor %}
     </ul>
-    <hr>
+    {% if form %}
+        <hr>
+    {% endif %}
 {% block configuration %}{% endblock %}
     {% if form %}
         <form action="" method="post" name="config">
