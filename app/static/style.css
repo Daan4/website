@@ -80,7 +80,8 @@ a.footer:hover, a.footer:active {
 /* digital clock */
 span#digital_clock {
     display: inline;
-    color: white;
+    color: pink;
     font-weight: bold;
     font-size: 20pt;
+    padding: 50px;
 }
