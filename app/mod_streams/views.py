@@ -28,6 +28,7 @@ def index():
                            active_stream=active_stream)
 
 
+# Used by mod_adminpanel module to do configuration form logic.
 def do_config_logic(form):
     channels = []
     if form.channel.data:
