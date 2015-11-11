@@ -2,7 +2,6 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_navigation import Navigation
-from config import *
 
 # Flask
 app = Flask(__name__)
@@ -25,10 +24,8 @@ app.register_blueprint(streams_module)
 app.register_blueprint(adminpanel_module)
 
 # Flask-Navigation
-# from app import navigation
-# nav = navigation.Navigation(app)
-# navigation.init_navigation(nav)
 nav = Navigation(app)
+# Create main navigation bar
 nav.Bar('base', [
     nav.Item('Home', 'index'),
     nav.Item('Projects', 'projects.index'),
@@ -37,11 +34,7 @@ nav.Bar('base', [
     nav.Item('Log in', 'login'),
     nav.Item('Log out', 'logout')
 ])
-
-# nav.Bar('adminpanel', [
-#     nav.Item('Projects', 'adminpanel.configure_module', {'bp_name': 'projects'}),
-#     nav.Item('Streams', 'adminpanel.configure_module', {'bp_name': 'streams'})
-# ])
+# Create adminpanel navigation bar
 from app.mod_adminpanel.views import setup_navigation
 setup_navigation(nav)
 
