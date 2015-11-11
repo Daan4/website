@@ -50,6 +50,10 @@ li.menu_item {
     float: left;
 }
 
+li.hidden_menu_item {
+    display: none;
+}
+
 ul.navigation_bar, ul#flash_list {
     list-style-type: none;
     margin: 0;
