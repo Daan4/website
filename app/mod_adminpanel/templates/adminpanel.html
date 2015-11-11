@@ -1,3 +1,4 @@
+{% from "macros.html" import render_field %}
 {% extends "base.html" %}
 {% set current_page = "adminpanel" %}
 {% block content %}
@@ -13,16 +14,9 @@
     {% if form %}
         <form action="" method="post" name="config">
             {{ form.hidden_tag() }}
-            <p>
-                Channels<br>
-                {{ form.channel(size=100) }} <br>
-            </p>
-            <p>
-                {{ form.add() }} <br>
-            </p>
-            <p>
-                {{ form.remove() }} <br>
-            </p>
+            {% for field in form %}
+                {{ render_field(field) }}
+            {% endfor %}
         </form>
     {% endif %}
 {% endblock %}

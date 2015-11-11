@@ -23,6 +23,5 @@ def configure_module(bp_name):
     module_views = importlib.import_module('app.mod_{}.views'.format(bp_name))
     form = module_forms.ConfigForm()
     if form.validate_on_submit():
-        pass
         module_views.do_config_logic(form)
     return render_template('{}_config.html'.format(bp_name), form=form)
