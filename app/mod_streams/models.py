@@ -1,8 +1,8 @@
 from app import db
-from app.models import Base
+from app.models import BaseModel
 
 
-class Stream(Base):
+class Stream(BaseModel):
     channel = db.Column(db.String(64), index=True, unique=True)
     is_online = db.Column(db.Boolean)
     game = db.Column(db.String(128), index=True)

@@ -2,14 +2,14 @@ from app import db
 from sqlalchemy_utils import PasswordType
 
 
-class Base(db.Model):
+class BaseModel(db.Model):
     __abstract__ = True
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
 
-class User(Base):
+class User(BaseModel):
     username = db.Column(db.String(64), index=True, unique=True)
     password = db.Column(PasswordType(schemes=['pbkdf2_sha512']))
 
