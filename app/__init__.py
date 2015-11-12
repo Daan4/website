@@ -2,6 +2,7 @@ from flask import Flask
 from flask_login import LoginManager, user_logged_in, user_logged_out
 from flask_sqlalchemy import SQLAlchemy
 from flask_navigation import Navigation
+from flaskext.markdown import Markdown
 
 # Flask
 app = Flask(__name__)
@@ -14,6 +15,10 @@ db = SQLAlchemy(app)
 lm = LoginManager()
 lm.init_app(app)
 lm.login_view = 'login'
+
+# Flask-Markdown
+Markdown(app)
+
 
 # Register blueprints
 from app.mod_projects.views import mod_projects as projects_module

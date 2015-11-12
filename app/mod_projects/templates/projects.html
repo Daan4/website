@@ -3,6 +3,6 @@
     Projects
     {% for project in projects %}
         <h1>{{ project.name }}</h1>
-        {{ project.content }}
+        {{ project.content|markdown }}
     {% endfor %}
 {% endblock %}
