@@ -21,16 +21,16 @@ def do_adminpanel_logic():
     edit_form = EditProjectForm()
     # Drop down list shows all projects.
     all_projects = Project.query.all()
-    edit_form.projects.choices = [(p.name, p.name) for p in all_projects]
+    edit_form.all_projects.choices = [(p.name, p.name) for p in all_projects]
     # Determine what button was pressed and act acccordingly.
     if edit_form.validate_on_submit():
         name = edit_form.name.data
         content = edit_form.content.data
-        selected_project = edit_form.projects.data
+        selected_project = edit_form.all_projects.data
         if edit_form.add.data:
             add_project(name, content, edit_form)
         elif edit_form.remove.data:
-            delete_project(name)
+            delete_project(name, edit_form)
         elif edit_form.load.data:
             load_project(selected_project, edit_form)
     return render_template('projects_config.html', edit_form=edit_form)
@@ -57,11 +57,12 @@ def add_project(name, content, form):
             raise e
 
 
-def delete_project(name):
+def delete_project(name, form):
     project = Project.query.filter_by(name=name).first()
     try:
         db.session.delete(project)
         db.session.commit()
+        form.projects.choices.remove((project.name, project.name))
         flash('Project {} removed'.format(name))
     except UnmappedInstanceError:
         flash('Project {} doesn\'t exist in the database'.format(name))
