@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_login import LoginManager, user_logged_in, user_logged_out
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_navigation import Navigation
 from flaskext.markdown import Markdown
