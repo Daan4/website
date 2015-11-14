@@ -32,7 +32,7 @@ def do_adminpanel_logic():
         elif edit_form.remove.data:
             delete_project(name)
         elif edit_form.load.data:
-            edit_project(selected_project, edit_form)
+            load_project(selected_project, edit_form)
     return render_template('projects_config.html', edit_form=edit_form)
 
 
@@ -67,7 +67,7 @@ def delete_project(name):
         flash('Project {} doesn\'t exist in the database.'.format(name))
 
 
-def edit_project(name, form):
+def load_project(name, form):
     project = Project.query.filter_by(name=name).first()
     if project:
         form.name.data = project.name
