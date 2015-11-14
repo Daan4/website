@@ -10,15 +10,21 @@
         </form>
     {% endif %}
     <br><br>
+    <script src="{{ url_for('static', filename='showdown.js') }}"></script>
     CONTENT MARKDOWN PREVIEW
     <div id="content_preview">
 
     </div>
     <script type="text/javascript">
-        $('#content').bind('blur keyup',function(){
+        function preview(){
             var content = document.getElementById('content').value;
             var div = document.getElementById('content_preview');
-            div.innerHTML = content;
-        });
+            var converter = new showdown.Converter();
+            var content_html = converter.makeHtml(content);
+            div.innerHTML = content_html;
+        }
+
+        $('#content').bind('input propertychange', preview);
+        $('#content').ready(preview);
     </script>
 {% endblock %}
