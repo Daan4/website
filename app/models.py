@@ -1,5 +1,4 @@
 from app import db
-from sqlalchemy_utils import PasswordType
 
 
 class BaseModel(db.Model):

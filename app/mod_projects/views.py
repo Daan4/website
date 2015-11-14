@@ -1,11 +1,8 @@
-from flask import Blueprint, request, render_template, flash, g,\
-    session, redirect, url_for
-from flask_login import login_required
+from flask import Blueprint, render_template, flash
 from app import db
 from app.mod_projects.models import Project
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import UnmappedInstanceError
-from .forms import ConfigForm
 
 mod_projects = Blueprint('projects', __name__, url_prefix='/projects', template_folder='templates')
 

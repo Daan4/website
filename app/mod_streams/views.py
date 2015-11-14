@@ -1,12 +1,9 @@
-from flask import Blueprint, request, render_template, flash,\
-    g, session, redirect, url_for
+from flask import Blueprint, request, render_template, flash, session
 from app import db
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import UnmappedInstanceError
-from flask_login import login_required
 from app.mod_streams.models import Stream
 from app.mod_streams import stream_api
-from .forms import ConfigForm
 
 mod_streams = Blueprint('streams', __name__, url_prefix='/streams', template_folder='templates')
 
