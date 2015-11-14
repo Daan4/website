@@ -22,7 +22,7 @@ def configure_module(bp_name):
 
 def register_adminpanel(bp_name):
     """ Decorator used to register a function as the function to be
-        called to generate the kwargs for its blueprint's mod_config.html page.
+        called to render the blueprint's adminpanel page.
     """
     def decorator(f):
         registered_adminpanels[bp_name] = f
