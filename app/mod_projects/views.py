@@ -41,7 +41,7 @@ def add_project(name, content, form):
     try:
         db.session.add(project)
         db.session.commit()
-        form.projects.choices.append((project.name, project.name))
+        form.all_projects.choices.append((project.name, project.name))
         flash('Project {} added'.format(name))
     except (IntegrityError, InvalidRequestError):
         # A project with this name already exists, update its content instead.
@@ -62,7 +62,7 @@ def delete_project(name, form):
     try:
         db.session.delete(project)
         db.session.commit()
-        form.projects.choices.remove((project.name, project.name))
+        form.all_projects.choices.remove((project.name, project.name))
         flash('Project {} removed'.format(name))
     except UnmappedInstanceError:
         flash('Project {} doesn\'t exist in the database'.format(name))
@@ -73,9 +73,9 @@ def load_project(name, form):
     if project:
         form.name.data = project.name
         form.content.data = project.content
-        for i, choice in enumerate(form.projects.choices):
+        for i, choice in enumerate(form.all_projects.choices):
             if choice[0] == name:
-                form.projects = i
+                form.all_projects = i
         flash('Project {} loaded'.format(name))
     else:
         flash('Project {} doesn\'t exist in the database'.format(name))

@@ -1,6 +1,7 @@
 from flask_wtf import Form
-from wtforms import TextAreaField, StringField, SubmitField, SelectField
+from wtforms import TextAreaField, StringField, SubmitField
 from app.validators import RequiredWhenFieldsHaveData
+from app.fields import NonValidatingSelectField
 
 
 # Used by mod_adminpanel module to show configuration form in the admin panel.
@@ -9,5 +10,5 @@ class EditProjectForm(Form):
     content = TextAreaField('Content')
     add = SubmitField('Add')
     remove = SubmitField('Remove')
-    all_projects = SelectField('Projects')
+    all_projects = NonValidatingSelectField('Projects')
     load = SubmitField('Load')
