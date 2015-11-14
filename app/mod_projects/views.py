@@ -64,7 +64,7 @@ def delete_project(name):
         db.session.commit()
         flash('Project {} removed'.format(name))
     except UnmappedInstanceError:
-        flash('Project {} doesn\'t exist in the database.'.format(name))
+        flash('Project {} doesn\'t exist in the database'.format(name))
 
 
 def load_project(name, form):
@@ -75,5 +75,6 @@ def load_project(name, form):
         for i, choice in enumerate(form.projects.choices):
             if choice[0] == name:
                 form.projects = i
+        flash('Project {} loaded'.format(name))
     else:
-        flash('Project {} doesn\'t exist in the database.'.format(name))
+        flash('Project {} doesn\'t exist in the database'.format(name))
