@@ -25,6 +25,7 @@ nav = Navigation(app)
 # Create main navigation bar and add Home button.
 nav.Bar('base', [nav.Item('Home', 'index')])
 
+
 # Register module blueprints
 from app.mod_projects.views import mod_projects as projects_blueprint
 from app.mod_streams.views import mod_streams as streams_blueprint
@@ -36,14 +37,15 @@ app.register_blueprint(adminpanel_blueprint)
 app.register_blueprint(auth_blueprint)
 
 # Setup modules
+nav_bar = nav['base']
 import app.mod_projects as projects_module
 import app.mod_streams as streams_module
 import app.mod_adminpanel as adminpanel_module
 import app.mod_auth as auth_module
-projects_module.setup_module(nav)
-streams_module.setup_module(nav)
-adminpanel_module.setup_module(app, nav)
-auth_module.setup_module(nav)
+projects_module.setup_module(nav, nav_bar)
+streams_module.setup_module(nav, nav_bar)
+adminpanel_module.setup_module(app, nav, nav_bar)
+auth_module.setup_module(nav, nav_bar)
 
 # Setup error handling
 import logging
