@@ -22,15 +22,8 @@ Markdown(app)
 
 # Flask-Navigation
 nav = Navigation(app)
-# Create main navigation bar
-nav.Bar('base', [
-    nav.Item('Home', 'index'),
-    nav.Item('Projects', 'projects.index'),
-    nav.Item('Streams', 'streams.index'),
-    nav.Item('Admin Panel', 'adminpanel.index', constraints=[Item.REQUIRELOGIN]),
-    nav.Item('Log in', 'auth.login', constraints=[Item.REQUIRELOGOUT]),
-    nav.Item('Log out', 'auth.logout', constraints=[Item.REQUIRELOGIN])
-])
+# Create main navigation bar and add Home button.
+nav.Bar('base', [nav.Item('Home', 'index')])
 
 # Register module blueprints
 from app.mod_projects.views import mod_projects as projects_blueprint
@@ -47,10 +40,10 @@ import app.mod_projects as projects_module
 import app.mod_streams as streams_module
 import app.mod_adminpanel as adminpanel_module
 import app.mod_auth as auth_module
-projects_module.setup_module()
-streams_module.setup_module()
+projects_module.setup_module(nav)
+streams_module.setup_module(nav)
 adminpanel_module.setup_module(app, nav)
-auth_module.setup_module()
+auth_module.setup_module(nav)
 
 # Setup error handling
 import logging

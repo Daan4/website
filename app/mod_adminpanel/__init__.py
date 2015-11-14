@@ -2,7 +2,10 @@ from importlib import import_module
 
 
 def setup_module(app, nav):
+    # Set up navigation bar in adminpanel
     setup_navigation(app, nav)
+    # Add navigation bar item to the main navigation bar
+    nav['base'].items.append(nav.Item('Admin Panel', 'adminpanel.index', constraints=[nav.Item.REQUIRELOGIN]))
 
 
 # Sets up a navigation menu item for each module with mod_adminpanel integration.
