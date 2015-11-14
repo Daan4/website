@@ -24,7 +24,7 @@ def login():
             login_user(user, remember=remember_me)
             flash('User {} logged in.'.format(username))
             next_view = request.args.get('next')
-            if not next_view or next_view == '/logout':
+            if not next_view or next_view == '{}/logout'.format(mod_auth.url_prefix):
                 return redirect(url_for('index'))
             else:
                 return redirect(next_view)

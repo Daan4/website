@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 # Flask-Login
 lm = LoginManager()
 lm.init_app(app)
-lm.login_view = 'login'
+lm.login_view = 'auth.login'
 
 # Flask-Markdown
 Markdown(app)
