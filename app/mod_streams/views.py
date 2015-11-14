@@ -5,6 +5,7 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from app.mod_streams.models import Stream
 from app.mod_streams import stream_api
 from .forms import ConfigForm
+from app.mod_adminpanel.views import register_adminpanel
 
 mod_streams = Blueprint('streams', __name__, url_prefix='/streams', template_folder='templates')
 
@@ -28,7 +29,8 @@ def index():
 
 
 # Used by mod_adminpanel module to do configuration form logic.
-def do_config_logic():
+@register_adminpanel(mod_streams.name)
+def do_adminpanel_logic():
     config_form = ConfigForm()
     channels = []
     if config_form.channel.data:
@@ -51,4 +53,4 @@ def do_config_logic():
                 flash('Channel {} removed.'.format(channel))
             except UnmappedInstanceError:
                 flash('Channel {} doesn\'t exist in the database'.format(channel))
-    return {'config_form': config_form}
+    return render_template('streams_config.html', config_form=config_form)

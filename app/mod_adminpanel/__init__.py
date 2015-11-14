@@ -1,5 +1,4 @@
-from importlib import import_module
-from .views import registered_blueprints
+from .views import registered_adminpanels
 
 
 def setup_module(app, nav, nav_bar):
@@ -11,5 +10,5 @@ def setup_module(app, nav, nav_bar):
 
 # Sets up a navigation menu item for each module with mod_adminpanel integration.
 def setup_navigation(app, nav):
-    items = [nav.Item(x, 'adminpanel.configure_module', {'bp_name': x}) for x in registered_blueprints]
+    items = [nav.Item(x, 'adminpanel.configure_module', {'bp_name': x}) for x in registered_adminpanels]
     nav.Bar('adminpanel', items)

@@ -4,6 +4,7 @@ from app.mod_projects.models import Project
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from .forms import ConfigForm, LoadProjectForm
+from app.mod_adminpanel.views import register_adminpanel
 
 mod_projects = Blueprint('projects', __name__, url_prefix='/projects', template_folder='templates')
 
@@ -15,7 +16,8 @@ def index():
 
 
 # Used by mod_adminpanel module to do configuration form logic.
-def do_config_logic():
+@register_adminpanel(mod_projects.name)
+def do_adminpanel_logic():
     config_form = ConfigForm()
     if config_form.validate_on_submit():
         name_data = config_form.name.data
@@ -44,4 +46,4 @@ def do_config_logic():
         pass
     all_projects = Project.query.all()
     load_form.projects.choices = [(p.name, p.name) for p in all_projects]
-    return {'config_form': config_form, 'load_form': load_form}
+    return render_template('projects_config.html', config_form=config_form, load_form=load_form)
