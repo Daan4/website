@@ -10,7 +10,7 @@ mod_auth = Blueprint('auth', __name__, url_prefix='/user', template_folder='temp
 
 @mod_auth.route('/login', methods=['GET', 'POST'])
 def login():
-    if g.user is not None and g.user.is_authenticated:
+    if user_is_logged_in():
         flash('User {} is already logged in.'.format(g.user.username))
         return redirect(url_for('index'))
     form = LoginForm()
@@ -35,7 +35,7 @@ def login():
 @mod_auth.route('/logout')
 @login_required
 def logout():
-    if g.user is not None and g.user.is_authenticated:
+    if user_is_logged_in():
         flash('User {} logged out.'.format(g.user.username))
         logout_user()
     else:
@@ -51,3 +51,7 @@ def before_request():
 @lm.user_loader
 def load_user(id_):
     return User.query.get(int(id_))
+
+
+def user_is_logged_in():
+    return g.user is not None and g.user.is_authenticated
