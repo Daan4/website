@@ -20,26 +20,6 @@ lm.login_view = 'auth.login'
 # Flask-Markdown
 Markdown(app)
 
-# Setup modules
-import app.mod_projects as projects_module
-import app.mod_streams as streams_module
-import app.mod_adminpanel as adminpanel_module
-import app.mod_auth as auth_module
-projects_module.setup_module()
-streams_module.setup_module()
-adminpanel_module.setup_module()
-auth_module.setup_module()
-
-# Register module blueprints
-from app.mod_projects.views import mod_projects as projects_blueprint
-from app.mod_streams.views import mod_streams as streams_blueprint
-from app.mod_adminpanel.views import mod_adminpanel as adminpanel_blueprint
-from app.mod_auth.views import mod_auth as auth_blueprint
-app.register_blueprint(projects_blueprint)
-app.register_blueprint(streams_blueprint)
-app.register_blueprint(adminpanel_blueprint)
-app.register_blueprint(auth_blueprint)
-
 # Flask-Navigation
 nav = Navigation(app)
 # Create main navigation bar
@@ -51,12 +31,28 @@ nav.Bar('base', [
     nav.Item('Log in', 'auth.login', constraints=[Item.REQUIRELOGOUT]),
     nav.Item('Log out', 'auth.logout', constraints=[Item.REQUIRELOGIN])
 ])
-# Create adminpanel navigation bar
-from app.mod_adminpanel.views import setup_navigation
-setup_navigation(nav)
 
+# Register module blueprints
+from app.mod_projects.views import mod_projects as projects_blueprint
+from app.mod_streams.views import mod_streams as streams_blueprint
+from app.mod_adminpanel.views import mod_adminpanel as adminpanel_blueprint
+from app.mod_auth.views import mod_auth as auth_blueprint
+app.register_blueprint(projects_blueprint)
+app.register_blueprint(streams_blueprint)
+app.register_blueprint(adminpanel_blueprint)
+app.register_blueprint(auth_blueprint)
 
-# Error handling
+# Setup modules
+import app.mod_projects as projects_module
+import app.mod_streams as streams_module
+import app.mod_adminpanel as adminpanel_module
+import app.mod_auth as auth_module
+projects_module.setup_module()
+streams_module.setup_module()
+adminpanel_module.setup_module(app, nav)
+auth_module.setup_module()
+
+# Setup error handling
 import logging
 
 # if not app.debug:
