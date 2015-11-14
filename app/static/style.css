@@ -12,7 +12,7 @@ div.flash {
 }
 
 /* content block */
-div#content {
+div#page_content {
     display: inline;
     color: #FFFFFF;
 }
