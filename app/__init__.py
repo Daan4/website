@@ -20,16 +20,25 @@ lm.login_view = 'auth.login'
 # Flask-Markdown
 Markdown(app)
 
+# Setup modules
+import app.mod_projects as projects_module
+import app.mod_streams as streams_module
+import app.mod_adminpanel as adminpanel_module
+import app.mod_auth as auth_module
+projects_module.setup_module()
+streams_module.setup_module()
+adminpanel_module.setup_module()
+auth_module.setup_module()
 
-# Register blueprints
-from app.mod_projects.views import mod_projects as projects_module
-from app.mod_streams.views import mod_streams as streams_module
-from app.mod_adminpanel.views import mod_adminpanel as adminpanel_module
-from app.mod_auth.views import mod_auth as auth_module
-app.register_blueprint(projects_module)
-app.register_blueprint(streams_module)
-app.register_blueprint(adminpanel_module)
-app.register_blueprint(auth_module)
+# Register module blueprints
+from app.mod_projects.views import mod_projects as projects_blueprint
+from app.mod_streams.views import mod_streams as streams_blueprint
+from app.mod_adminpanel.views import mod_adminpanel as adminpanel_blueprint
+from app.mod_auth.views import mod_auth as auth_blueprint
+app.register_blueprint(projects_blueprint)
+app.register_blueprint(streams_blueprint)
+app.register_blueprint(adminpanel_blueprint)
+app.register_blueprint(auth_blueprint)
 
 # Flask-Navigation
 nav = Navigation(app)
