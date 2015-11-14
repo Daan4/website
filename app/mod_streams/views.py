@@ -44,7 +44,8 @@ def do_adminpanel_logic():
         elif config_form.remove.data:
             delete_streams(channels, config_form)
         elif config_form.load.data:
-            load_stream(selected_channels, config_form)
+            if selected_channels:
+                load_stream(selected_channels, config_form)
     return render_template('streams_config.html', config_form=config_form)
 
 
@@ -67,7 +68,7 @@ def delete_streams(channels, form):
         try:
             db.session.delete(stream)
             db.session.commit()
-            form.all_channels.choices.pop((stream.channel, stream.channel))
+            form.all_channels.choices.remove((stream.channel, stream.channel))
             flash('Channel {} removed'.format(channel))
         except UnmappedInstanceError:
             flash('Channel {} doesn\'t exist in the database'.format(channel))
