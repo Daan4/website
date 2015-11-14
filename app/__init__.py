@@ -37,6 +37,7 @@ app.register_blueprint(adminpanel_blueprint)
 app.register_blueprint(auth_blueprint)
 
 # Setup modules
+# The order of calling setup_module determines the order of the main navigation bar items.
 nav_bar = nav['base']
 import app.mod_projects as projects_module
 import app.mod_streams as streams_module
