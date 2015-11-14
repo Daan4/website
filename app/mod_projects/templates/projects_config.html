@@ -2,11 +2,28 @@
 {% block configuration %}
     PROJECTS CONFIGURATION<br><br>
     {% if edit_form %}
-        <form action="" method="post" name="config">
+        <form action="" method="post" name="config" id="edit_form">
             {{ edit_form.hidden_tag() }}
             {% for field in edit_form %}
-                {{ render_field(field) }}
+                {% if field.id == 'content' %}
+                    {{ render_field(field, onchange='preview()') }}
+                {% else %}
+                    {{ render_field(field) }}
+                {% endif %}
+
             {% endfor %}
         </form>
     {% endif %}
+    <br><br>
+    CONTENT MARKDOWN PREVIEW
+    <div id="content_preview">
+
+    </div>
+    <script type="text/javascript">
+        function preview() {
+            var content = document.getElementById('content').value;
+            var div = document.getElementById('content_preview');
+            div.innerHTML = content;
+        }
+    </script>
 {% endblock %}
