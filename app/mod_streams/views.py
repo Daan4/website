@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from app.mod_streams.models import Stream
 from app.mod_streams import stream_api
+from .forms import ConfigForm
 
 mod_streams = Blueprint('streams', __name__, url_prefix='/streams', template_folder='templates')
 

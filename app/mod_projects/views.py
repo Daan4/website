@@ -3,6 +3,7 @@ from app import db
 from app.mod_projects.models import Project
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import UnmappedInstanceError
+from .forms import ConfigForm
 
 mod_projects = Blueprint('projects', __name__, url_prefix='/projects', template_folder='templates')
 
