@@ -30,20 +30,10 @@
 <body onload="startTime()">
     <ul class="navigation_bar">
         {% for item in nav.base %}
-            {% if item.html_attrs['hide_when'] == 'login' %}
-                {% if g.user and g.user.is_authenticated %}
-                    <li class="hidden_menu_item">
-                {% else %}
-                    <li class="menu_item">
-                {% endif %}
-            {% elif item.html_attrs['hide_when'] == 'logout' %}
-                {% if not(g.user and g.user.is_authenticated) %}
-                    <li class="hidden_menu_item">
-                {% else %}
-                    <li class="menu_item">
-                {% endif %}
-            {% else %}
+            {% if item.show() %}
                 <li class="menu_item">
+            {% else %}
+                <li class="hidden_menu_item">
             {% endif %}
                 <a class="{% if item.is_active %}
                           active_menu_item

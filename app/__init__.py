@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from flask_navigation import Navigation
+from .navigation import MyNavigation as Navigation
+from .navigation import NavBarItem as Item
 from flaskext.markdown import Markdown
 
 # Flask
@@ -37,9 +38,9 @@ nav.Bar('base', [
     nav.Item('Home', 'index'),
     nav.Item('Projects', 'projects.index'),
     nav.Item('Streams', 'streams.index'),
-    nav.Item('Admin Panel', 'adminpanel.index', html_attrs={'hide_when': 'logout'}),
-    nav.Item('Log in', 'auth.login', html_attrs={'hide_when': 'login'}),
-    nav.Item('Log out', 'auth.logout', html_attrs={'hide_when': 'logout'})
+    nav.Item('Admin Panel', 'adminpanel.index', constraints=[Item.REQUIRELOGIN]),
+    nav.Item('Log in', 'auth.login', constraints=[Item.REQUIRELOGOUT]),
+    nav.Item('Log out', 'auth.logout', constraints=[Item.REQUIRELOGIN])
 ])
 # Create adminpanel navigation bar
 from app.mod_adminpanel.views import setup_navigation
