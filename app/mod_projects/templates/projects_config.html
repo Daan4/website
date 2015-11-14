@@ -5,12 +5,7 @@
         <form action="" method="post" name="config" id="edit_form">
             {{ edit_form.hidden_tag() }}
             {% for field in edit_form %}
-                {% if field.id == 'content' %}
-                    {{ render_field(field, onchange='preview()') }}
-                {% else %}
-                    {{ render_field(field) }}
-                {% endif %}
-
+                {{ render_field(field) }}
             {% endfor %}
         </form>
     {% endif %}
@@ -20,10 +15,10 @@
 
     </div>
     <script type="text/javascript">
-        function preview() {
+        $('#content').bind('blur keyup',function(){
             var content = document.getElementById('content').value;
             var div = document.getElementById('content_preview');
             div.innerHTML = content;
-        }
+        });
     </script>
 {% endblock %}
