@@ -3,7 +3,7 @@ from app import db
 from app.mod_projects.models import Project
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import UnmappedInstanceError
-from .forms import ConfigForm, LoadProjectForm
+from .forms import EditProjectForm
 from app.mod_adminpanel.views import register_adminpanel
 
 mod_projects = Blueprint('projects', __name__, url_prefix='/projects', template_folder='templates')
@@ -18,32 +18,62 @@ def index():
 # Used by mod_adminpanel module to do configuration form logic.
 @register_adminpanel(mod_projects.name)
 def do_adminpanel_logic():
-    config_form = ConfigForm()
-    if config_form.validate_on_submit():
-        name_data = config_form.name.data
-        content_data = config_form.content.data
-        if config_form.add.data:
-            project = Project(name=name_data, content=content_data)
-            try:
-                db.session.add(project)
-                db.session.commit()
-                flash('Project {} added'.format(name_data))
-            except (IntegrityError, InvalidRequestError):
-                flash('Project {} already exists in the database'.format(name_data))
-        elif config_form.remove.data:
-            project = Project.query.filter_by(name=name_data).first()
-            try:
-                db.session.delete(project)
-                db.session.commit()
-                flash('Project {} removed'.format(name_data))
-            except UnmappedInstanceError:
-                flash('Project {} doesn\'t exist in the database.'.format(name_data))
-        elif config_form.edit.data:
-            pass
-
-    load_form = LoadProjectForm()
-    if load_form.validate_on_submit():
-        pass
+    edit_form = EditProjectForm()
+    # Drop down list shows all projects.
     all_projects = Project.query.all()
-    load_form.projects.choices = [(p.name, p.name) for p in all_projects]
-    return render_template('projects_config.html', config_form=config_form, load_form=load_form)
+    edit_form.projects.choices = [(p.name, p.name) for p in all_projects]
+    # Determine what button was pressed and act acccordingly.
+    if edit_form.validate_on_submit():
+        name = edit_form.name.data
+        content = edit_form.content.data
+        selected_project = edit_form.projects.data
+        if edit_form.add.data:
+            add_project(name, content, edit_form)
+        elif edit_form.remove.data:
+            delete_project(name)
+        elif edit_form.load.data:
+            edit_project(selected_project, edit_form)
+    return render_template('projects_config.html', edit_form=edit_form)
+
+
+def add_project(name, content, form):
+    project = Project(name=name, content=content)
+    try:
+        db.session.add(project)
+        db.session.commit()
+        form.projects.choices.append((project.name, project.name))
+        flash('Project {} added'.format(name))
+    except (IntegrityError, InvalidRequestError):
+        # A project with this name already exists, update its content instead.
+        db.session.rollback()
+        project = Project.query.filter_by(name=name).first()
+        project.content = content
+        try:
+            db.session.add(project)
+            db.session.commit()
+            flash('Project {} content updated'.format(name))
+        except Exception as e:
+            # todo: which exceptions can occur?
+            raise e
+
+
+def delete_project(name):
+    project = Project.query.filter_by(name=name).first()
+    try:
+        db.session.delete(project)
+        db.session.commit()
+        flash('Project {} removed'.format(name))
+    except UnmappedInstanceError:
+        flash('Project {} doesn\'t exist in the database.'.format(name))
+
+
+def edit_project(name, form):
+    project = Project.query.filter_by(name=name).first()
+    if project:
+        form.name.data = project.name
+        form.content.data = project.content
+        for i, choice in enumerate(form.projects.choices):
+            if choice[0] == name:
+                form.projects = i
+    else:
+        flash('Project {} doesn\'t exist in the database.'.format(name))
