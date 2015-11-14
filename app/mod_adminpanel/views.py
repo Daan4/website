@@ -24,10 +24,12 @@ def configure_module(bp_name):
     else:
         abort(404)
     try:
-        form = module.ConfigForm()
-        if form.validate_on_submit():
-            module.do_config_form_logic(form)
-        return render_template('{}_config.html'.format(bp_name), form=form)
+        render_template_kwargs = module.do_config_logic()
+        return render_template('{}_config.html'.format(bp_name), **render_template_kwargs)
+        # form = module.ConfigForm()
+        # if form.validate_on_submit():
+        #     render_template_kwargs = module.do_config_form_logic(form)
+        # return render_template('{}_config.html'.format(bp_name), form=form)
     except AttributeError as e:
         # The module has no ConfigForm form or do_config_form_logic function
         abort(404)

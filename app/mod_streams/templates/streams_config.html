@@ -1,10 +1,10 @@
 {% extends "adminpanel.html" %}
 {% block configuration %}
     STREAMS CONFIGURATION
-    {% if form %}
+    {% if config_form %}
         <form action="" method="post" name="config">
-            {{ form.hidden_tag() }}
-            {% for field in form %}
+            {{ config_form.hidden_tag() }}
+            {% for field in config_form %}
                 {{ render_field(field) }}
             {% endfor %}
         </form>

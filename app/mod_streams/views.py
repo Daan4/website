@@ -28,11 +28,12 @@ def index():
 
 
 # Used by mod_adminpanel module to do configuration form logic.
-def do_config_form_logic(form):
+def do_config_logic():
+    config_form = ConfigForm()
     channels = []
-    if form.channel.data:
-        channels = form.channel.data.split(',')
-    if form.add.data:
+    if config_form.channel.data:
+        channels = config_form.channel.data.split(',')
+    if config_form.add.data:
         for channel in channels:
             stream = Stream(channel=channel)
             try:
@@ -41,7 +42,7 @@ def do_config_form_logic(form):
                 flash('Channel {} added'.format(channel))
             except (IntegrityError, InvalidRequestError):
                 flash('Channel {} already exists in the database'.format(channel))
-    elif form.remove.data:
+    elif config_form.remove.data:
         for channel in channels:
             stream = Stream.query.filter_by(channel=channel).first()
             try:
@@ -50,3 +51,4 @@ def do_config_form_logic(form):
                 flash('Channel {} removed.'.format(channel))
             except UnmappedInstanceError:
                 flash('Channel {} doesn\'t exist in the database'.format(channel))
+    return {'config_form': config_form}

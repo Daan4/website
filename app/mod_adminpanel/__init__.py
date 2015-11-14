@@ -18,7 +18,7 @@ def setup_navigation(app, nav):
         # If both of those are implemented then the module should have an adminpanel page.
         try:
             module.ConfigForm
-            module.do_config_form_logic
+            module.do_config_logic
         except AttributeError as e:
             continue
         items_to_add.append(name)

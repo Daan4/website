@@ -1,10 +1,18 @@
 {% extends "adminpanel.html" %}
 {% block configuration %}
     PROJECTS CONFIGURATION
-    {% if form %}
+    {% if config_form %}
         <form action="" method="post" name="config">
-            {{ form.hidden_tag() }}
-            {% for field in form %}
+            {{ config_form.hidden_tag() }}
+            {% for field in config_form %}
+                {{ render_field(field) }}
+            {% endfor %}
+        </form>
+    {% endif %}
+    {% if load_form %}
+        <form action="" method="post" name="load">
+            {{ load_form.hidden_tag() }}
+            {% for field in load_form %}
                 {{ render_field(field) }}
             {% endfor %}
         </form>
