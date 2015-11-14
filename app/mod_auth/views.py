@@ -49,5 +49,5 @@ def before_request():
 
 
 @lm.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+def load_user(id_):
+    return User.query.get(int(id_))
