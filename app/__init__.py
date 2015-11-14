@@ -24,9 +24,11 @@ Markdown(app)
 from app.mod_projects.views import mod_projects as projects_module
 from app.mod_streams.views import mod_streams as streams_module
 from app.mod_adminpanel.views import mod_adminpanel as adminpanel_module
+from app.mod_auth.views import mod_auth as auth_module
 app.register_blueprint(projects_module)
 app.register_blueprint(streams_module)
 app.register_blueprint(adminpanel_module)
+app.register_blueprint(auth_module)
 
 # Flask-Navigation
 nav = Navigation(app)
@@ -36,8 +38,8 @@ nav.Bar('base', [
     nav.Item('Projects', 'projects.index'),
     nav.Item('Streams', 'streams.index'),
     nav.Item('Admin Panel', 'adminpanel.index', html_attrs={'hide_when': 'logout'}),
-    nav.Item('Log in', 'login', html_attrs={'hide_when': 'login'}),
-    nav.Item('Log out', 'logout', html_attrs={'hide_when': 'logout'})
+    nav.Item('Log in', 'auth.login', html_attrs={'hide_when': 'login'}),
+    nav.Item('Log out', 'auth.logout', html_attrs={'hide_when': 'logout'})
 ])
 # Create adminpanel navigation bar
 from app.mod_adminpanel.views import setup_navigation
