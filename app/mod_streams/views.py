@@ -28,29 +28,53 @@ def index():
                            active_stream=active_stream)
 
 
-# Used by mod_adminpanel module to do configuration form logic.
 @register_adminpanel(mod_streams.name)
 def do_adminpanel_logic():
     config_form = ConfigForm()
-    channels = []
-    if config_form.channel.data:
-        channels = config_form.channel.data.split(',')
-    if config_form.add.data:
-        for channel in channels:
-            stream = Stream(channel=channel)
-            try:
-                db.session.add(stream)
-                db.session.commit()
-                flash('Channel {} added'.format(channel))
-            except (IntegrityError, InvalidRequestError):
-                flash('Channel {} already exists in the database'.format(channel))
-    elif config_form.remove.data:
-        for channel in channels:
-            stream = Stream.query.filter_by(channel=channel).first()
-            try:
-                db.session.delete(stream)
-                db.session.commit()
-                flash('Channel {} removed.'.format(channel))
-            except UnmappedInstanceError:
-                flash('Channel {} doesn\'t exist in the database'.format(channel))
+    # Drop down list shows all channels.
+    all_streams = Stream.query.all()
+    config_form.all_channels.choices = [(s.channel, s.channel) for s in all_streams]
+    if config_form.validate_on_submit():
+        channels = []
+        selected_channels = config_form.all_channels.data
+        if config_form.channel.data:
+            channels = config_form.channel.data.split(',')
+        if config_form.add.data:
+            add_streams(channels, config_form)
+        elif config_form.remove.data:
+            delete_streams(channels, config_form)
+        elif config_form.load.data:
+            load_stream(selected_channels, config_form)
     return render_template('streams_config.html', config_form=config_form)
+
+
+def add_streams(channels, form):
+    for channel in channels:
+        stream = Stream(channel=channel)
+        try:
+            db.session.add(stream)
+            db.session.commit()
+            # Add newly added channel to the drop-down selection list.
+            form.all_channels.choices.append((stream.channel, stream.channel))
+            flash('Channel {} added'.format(channel))
+        except (IntegrityError, InvalidRequestError):
+            flash('Channel {} already exists in the database'.format(channel))
+
+
+def delete_streams(channels, form):
+    for channel in channels:
+        stream = Stream.query.filter_by(channel=channel).first()
+        try:
+            db.session.delete(stream)
+            db.session.commit()
+            form.all_channels.choices.pop((stream.channel, stream.channel))
+            flash('Channel {} removed'.format(channel))
+        except UnmappedInstanceError:
+            flash('Channel {} doesn\'t exist in the database'.format(channel))
+
+
+def load_stream(channels, form):
+    streams = Stream.query.filter(Stream.channel.in_(channels)).all()
+    form.channel.data = ','.join([s.channel for s in streams])
+    for stream in streams:
+        flash('Stream {} loaded'.format(stream.channel))
