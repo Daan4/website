@@ -15,12 +15,4 @@
         <hr>
     {% endif %}
 {% block configuration %}{% endblock %}
-    {% if form %}
-        <form action="" method="post" name="config">
-            {{ form.hidden_tag() }}
-            {% for field in form %}
-                {{ render_field(field) }}
-            {% endfor %}
-        </form>
-    {% endif %}
 {% endblock %}
