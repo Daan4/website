@@ -1,4 +1,4 @@
-from app import lm
+from app import lm, app
 from flask import g, flash, redirect, url_for, session, request, render_template,\
     Blueprint
 from .forms import LoginForm
@@ -43,7 +43,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@mod_auth.before_request
+@app.before_request
 def before_request():
     g.user = current_user
 
