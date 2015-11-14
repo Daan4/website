@@ -1,10 +1,7 @@
-from flask import Blueprint, request, render_template, flash,\
-    g, session, redirect, url_for, abort
+from flask import Blueprint, render_template, abort
 from app import app
-from flask_navigation.navbar import NavigationBar
 from flask_login import login_required
 import importlib
-from .forms import ConfigForm
 
 mod_adminpanel = Blueprint('adminpanel', __name__, url_prefix='/adminpanel', template_folder='templates')
 
@@ -24,7 +21,7 @@ def configure_module(bp_name):
         if name == bp_name:
             module = importlib.import_module(blueprint.import_name)
             break
-    if not module:
+    else:
         abort(404)
     form = module.ConfigForm()
     if form.validate_on_submit():
