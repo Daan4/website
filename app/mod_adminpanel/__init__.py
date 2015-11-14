@@ -17,7 +17,6 @@ def setup_navigation(app, nav):
         # Check if blueprint has a function named do_config_form_logic.
         # If both of those are implemented then the module should have an adminpanel page.
         try:
-            module.ConfigForm
             module.do_config_logic
         except AttributeError as e:
             continue
