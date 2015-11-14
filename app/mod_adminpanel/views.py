@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, redirect, url_for, flash
 from app import app
 from flask_login import login_required
 import importlib
@@ -23,10 +23,15 @@ def configure_module(bp_name):
             break
     else:
         abort(404)
-    form = module.ConfigForm()
-    if form.validate_on_submit():
-        module.do_config_form_logic(form)
-    return render_template('{}_config.html'.format(bp_name), form=form)
+    try:
+        form = module.ConfigForm()
+        if form.validate_on_submit():
+            module.do_config_form_logic(form)
+        return render_template('{}_config.html'.format(bp_name), form=form)
+    except AttributeError as e:
+        # The module has no ConfigForm form or do_config_form_logic function
+        abort(404)
+
 
 
 # Sets up a navigation menu item for each module with mod_adminpanel integration.
