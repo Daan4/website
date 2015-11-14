@@ -9,5 +9,5 @@ class EditProjectForm(Form):
     content = TextAreaField('Content')
     add = SubmitField('Add')
     remove = SubmitField('Remove')
-    projects = SelectField('Projects')
+    all_projects = SelectField('Projects')
     load = SubmitField('Load')
