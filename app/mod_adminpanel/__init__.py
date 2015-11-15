@@ -1,7 +1,7 @@
-from .views import registered_adminpanels
 from flask import Blueprint
 
 mod_adminpanel = None
+registered_adminpanels = {}
 
 
 def setup_module(app, nav_bar):

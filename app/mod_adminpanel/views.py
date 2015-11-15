@@ -1,9 +1,6 @@
 from flask import render_template, abort
 from flask_login import login_required
-from . import mod_adminpanel
-
-
-registered_adminpanels = {}
+from . import mod_adminpanel, registered_adminpanels
 
 
 @mod_adminpanel.route('/')
