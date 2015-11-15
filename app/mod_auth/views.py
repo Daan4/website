@@ -1,8 +1,7 @@
 from app import app
-from flask import g, flash, redirect, url_for, session, request, render_template
+from flask import g, flash, redirect, url_for, session, request, render_template, Blueprint
 from .forms import LoginForm
 from .models import User
-from . import lm
 from flask_login import login_user, login_required, logout_user, current_user
 
 mod_auth = Blueprint('auth', __name__, url_prefix='/user', template_folder='templates')
@@ -50,8 +49,3 @@ def before_request():
 
 def user_is_logged_in():
     return g.user is not None and g.user.is_authenticated
-
-
-@lm.user_loader
-def load_user(id_):
-    return User.query.get(int(id_))

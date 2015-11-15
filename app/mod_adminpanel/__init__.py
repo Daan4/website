@@ -1,4 +1,4 @@
-from .views import mod_adminpanel
+from .views import mod_adminpanel, registered_adminpanels
 
 
 def setup_module(app, nav, nav_bar):
