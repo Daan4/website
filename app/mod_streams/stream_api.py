@@ -6,9 +6,14 @@ from .models import *
 # todo: stream api shouldnt import website_config directly
 # todo: get api stream url from config
 
-get_twitch_api_client_id = lambda: current_app.config['TWITCH_API_CLIENT_ID']
-get_twitch_api_client_secret = lambda: current_app.config['TWITCH_API_CLIENT_SECRET']
-get_twitch_api_stream_url = lambda: current_app.config['TWITCH_API_STREAM_URL']
+
+def get_twitch_api_client_id(): return current_app.config['TWITCH_API_CLIENT_ID']
+
+
+def get_twitch_api_client_secret(): return current_app.config['TWITCH_API_CLIENT_SECRET']
+
+
+def get_twitch_api_stream_url(): return current_app.config['TWITCH_API_STREAM_URL']
 
 
 def get_twitch_stream_object(channels):
