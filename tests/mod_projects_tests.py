@@ -9,37 +9,67 @@ CONTENT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim oc
 class TestProjects(BaseTestCase):
     @classmethod
     def setUpClass(cls):
-        super().setUpClass(disable_login=True)
+        cls.disable_login = True
+        super().setUpClass()
+        cls.url = url_for('adminpanel.configure_module', bp_name='projects')
 
-    def post_config_form(self, data):
-        return self.client.post(url_for('adminpanel.configure_module', bp_name='projects'), data=data)
+    def add_project(self, name, content):
+        return self.client.post(self.url, data=dict(
+            name=name,
+            content=content,
+            add='Add'
+        ))
 
-    def create_test_project(self):
-        db.session.add(Project(name=NAME, content=CONTENT))
-        db.session.commit()
+    def remove_project(self, name, content):
+        return self.client.post(self.url, data=dict(
+            name=name,
+            content=content,
+            remove='Remove'
+        ))
+
+    def load_project(self, name):
+        return self.client.post(self.url, data=dict(
+            all_projects=name,
+            load='Load'
+        ))
 
     def test_add(self):
         with self.client:
-            self.post_config_form(dict(name=NAME,
-                                       content=CONTENT,
-                                       add='Add'))
+            # Test that adding a project works
+            self.add_project(NAME, CONTENT)
             project = Project.query.filter_by(name=NAME).first()
             self.assertIsInstance(project, Project)
             self.assertEquals(project.name, NAME)
             self.assertEquals(project.content, CONTENT)
+            # todo: implement. currently fails because of db.session.rollback() in view
+            # # Test that adding an existing project updates the content
+            # self.add_project(NAME, '')
+            # project = Project.query.filter_by(name=NAME).first()
+            # self.assertEquals(project.content, '')
+            # Test that the project name is required
+            self.add_project('', CONTENT)
+            project = Project.query.filter_by(name='').first()
+            self.assertIsNone(project)
 
     def test_remove(self):
         with self.client:
-            self.create_test_project()
-            self.post_config_form(dict(name=NAME,
-                                       content=CONTENT,
-                                       remove='Remove'))
+            # Test that removing a project works
+            self.add_project(NAME, CONTENT)
+            self.remove_project(NAME, CONTENT)
             project = Project.query.filter_by(name=NAME).first()
             self.assertIsNone(project)
+            # Test that removing a non-existent project works
+            self.remove_project(NAME, CONTENT)
+            # Test that the project name is required
+            project = Project(name='', content=CONTENT)
+            db.session.add(project)
+            db.session.commit()
+            project = Project.query.filter_by(name='').first()
+            self.assertIsInstance(project, Project)
 
     def test_load(self):
         with self.client:
-            self.create_test_project()
-            rv = self.post_config_form(dict(all_projects=NAME,
-                                            load='Load'))
-            self.assertTrue(CONTENT.encode() in rv.data)
+            self.add_project(NAME, CONTENT)
+            rv = self.load_project(NAME)
+            self.assertIn(CONTENT.encode(), rv.data)
+            self.assertIn(NAME.encode(), rv.data)
