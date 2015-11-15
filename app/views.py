@@ -1,6 +1,6 @@
 from time import time
 from app import app, db
-from flask import render_template, g
+from flask import render_template, g, request, session, url_for
 
 
 @app.route('/')
@@ -10,13 +10,21 @@ def index():
 
 @app.errorhandler(404)
 def not_found_error(error):
-    return render_template('404.html', title='404'), 404
+    try:
+        redirect_url = session['previous_page']
+    except KeyError:
+        redirect_url = url_for('index')
+    return render_template('404.html', title='404', redirect_url=redirect_url), 404
 
 
 @app.errorhandler(500)
 def internal_error(error):
     db.session.rollback()
-    return render_template('500.html', title='500'), 500
+    try:
+        redirect_url = session['previous_page']
+    except KeyError:
+        redirect_url = url_for('index')
+    return render_template('500.html', title='500', redirect_url=redirect_url), 500
 
 
 @app.before_request
@@ -29,6 +37,7 @@ def before_request():
 def after_request(response):
     """ Replace the string __EXECUTION_TIME__ in the reponse with the actual
     execution time. """
+    session['previous_page'] = request.url
     diff = round((time() - g.start_time) * 1000)
     execution_time_string = "1 millisecond" if diff == 1 else "{} milliseconds".format(diff)
     if response.response:
