@@ -1,18 +1,14 @@
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from .navigation import MyNavigation as Navigation
-from .navigation import NavBarItem as Item
-from flaskext.markdown import Markdown
-import logging
-from logging.handlers import RotatingFileHandler
+from .navigation import *
 
 db = SQLAlchemy()
-nav = Navigation()
+nav = MyNavigation()
 module_setup_functions = []
 
 
 def create_app(config):
     # Flask
+    from flask import Flask
     app = Flask(__name__)
     app.config.from_object(config)
 
@@ -20,6 +16,7 @@ def create_app(config):
     db.init_app(app)
 
     # Flask-Markdown
+    from flaskext.markdown import Markdown
     Markdown(app)
 
     # Flask-Navigation
@@ -41,6 +38,8 @@ def create_app(config):
         f(app, nav, nav['base'])
 
     # Setup error handling
+    import logging
+    from logging.handlers import RotatingFileHandler
     # if not app.debug:
     #     # Via email
     #     from logging.handlers import SMTPHandler
@@ -74,12 +73,13 @@ def create_app(config):
     app.logger.info('website startup')
     app.logger.debug('website startup')
 
-    from app import views, models
-
     return app
 
 
 def register_module():
+    """ Decorator function used by modules to decorate setup function.
+        A list of setup functions to call is created in module_setup_functions.
+    """
     def decorator(f):
         module_setup_functions.append(f)
         return f
