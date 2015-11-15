@@ -1,19 +1,32 @@
-import os
-from app import app
+from app import create_app, db
 import unittest
-import tempfile
 
 
-class FlaskTestCase(unittest.TestCase):
+class BaseTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.app = create_app('config.test_config')
+        cls.client = cls.app.test_client()
+        cls._ctx = cls.app.test_request_context()
+        cls._ctx.push()
+        db.create_all()
+
+    @classmethod
+    def tearDownClass(cls):
+        db.session.remove()
+        db.drop_all()
+        db.get_engine(cls.app).dispose()
+
     def setUp(self):
-        self.db_fd, app.config['DATABASE'] = tempfile.mkstemp()
-        app.config['TESTING'] = True
-        self.app = app.test_client()
-        app.init_db()
+        self._ctx = self.app.test_request_context()
+        self._ctx.push()
+        db.session.begin(subtransactions=True)
 
     def tearDown(self):
-        os.close(self.db_fd)
-        os.unlink(app.config['DATABASE'])
+        db.session.rollback()
+        db.session.close()
+        self._ctx.pop()
+
 
 if __name__ == '__main__':
     unittest.main()
