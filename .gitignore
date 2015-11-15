@@ -21,3 +21,7 @@ how to create db.txt
 
 # list of stuff to do
 TODO.txt
+
+# javascript libraries
+/static/jquery-2.1.4.js
+/static/showdown.js
