@@ -10,14 +10,13 @@ def index():
     return render_template('index.html')
 
 
-@mod_root.before_request
+@mod_root.before_app_request
 def before_request():
     # Save current time to be used after the request to display the time the request took to complete.
     g.start_time = time()
 
 
-# todo: error page back button always goes to base.index
-@mod_root.after_request
+@mod_root.after_app_request
 def after_request(response):
     """ Replace the string __EXECUTION_TIME__ in the reponse with the actual
     execution time. """
