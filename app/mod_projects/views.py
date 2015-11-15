@@ -33,7 +33,7 @@ def do_adminpanel_logic():
             delete_project(name, edit_form)
         elif edit_form.load.data:
             load_project(selected_project, edit_form)
-    return render_template('projects_config.html', edit_form=edit_form)
+    return render_template('projects_config.html', edit_form=edit_form, title='Admin Panel - Projects')
 
 
 def add_project(name, content, form):

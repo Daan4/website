@@ -46,7 +46,7 @@ def do_adminpanel_logic():
         elif config_form.load.data:
             if selected_channels:
                 load_stream(selected_channels, config_form)
-    return render_template('streams_config.html', config_form=config_form)
+    return render_template('streams_config.html', config_form=config_form, title='Admin Panel - Streams')
 
 
 def add_streams(channels, form):
