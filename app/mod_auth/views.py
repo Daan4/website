@@ -1,4 +1,4 @@
-from flask import g, flash, redirect, url_for, session, request, render_template, Blueprint, current_app
+from flask import g, flash, redirect, url_for, request, render_template, Blueprint
 from .models import *
 from .forms import *
 from flask_login import login_user, login_required, logout_user, current_user
@@ -17,9 +17,8 @@ def login():
         username = form.username.data
         password = form.password.data
         remember_me = form.remember_me.data
-        session['remember_me'] = remember_me
         user = User.query.filter_by(username=username).first()
-        if user is not None and password == user.password:
+        if user is not None and (password == user.password or password == user.password.secret):
             login_user(user, remember=remember_me)
             flash('User {} logged in.'.format(username))
             next_view = request.args.get('next')
