@@ -29,3 +29,5 @@ TWITCH_API_CLIENT_ID = c.TWITCH_API_CLIENT_ID
 TWITCH_API_CLIENT_SECRET = c.TWITCH_API_CLIENT_SECRET
 TWITCH_API_STREAM_URL = 'https://api.twitch.tv/kraken/streams/?channel='
 
+# testing
+TESTING = True
