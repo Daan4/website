@@ -6,7 +6,8 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from .forms import EditProjectForm
 from app.mod_adminpanel.views import register_adminpanel
 
-mod_projects = Blueprint('projects', __name__, url_prefix='/projects', template_folder='templates')
+mod_projects = Blueprint('projects', __name__, url_prefix='/projects', template_folder='templates',
+                         static_folder='static')
 
 
 @mod_projects.route('/', methods=['GET'])

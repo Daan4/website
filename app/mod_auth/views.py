@@ -4,7 +4,8 @@ from .forms import LoginForm
 from .models import User
 from flask_login import login_user, login_required, logout_user, current_user
 
-mod_auth = Blueprint('auth', __name__, url_prefix='/user', template_folder='templates')
+mod_auth = Blueprint('auth', __name__, url_prefix='/user', template_folder='templates',
+                     static_folder='static')
 
 
 @mod_auth.route('/login', methods=['GET', 'POST'])

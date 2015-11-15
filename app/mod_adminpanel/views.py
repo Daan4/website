@@ -1,7 +1,8 @@
 from flask import render_template, abort, Blueprint
 from flask_login import login_required
 
-mod_adminpanel = Blueprint('adminpanel', __name__, url_prefix='/adminpanel', template_folder='templates')
+mod_adminpanel = Blueprint('adminpanel', __name__, url_prefix='/adminpanel', template_folder='templates',
+                           static_folder='static')
 registered_adminpanels = {}
 
 
