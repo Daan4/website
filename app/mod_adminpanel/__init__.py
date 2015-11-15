@@ -1,11 +1,13 @@
-from .views import registered_adminpanels
+from .views import registered_adminpanels, mod_adminpanel
 
 
-def setup_module(app, nav, nav_bar):
+def setup_module(app, nav_bar):
+    # Register blueprint
+    app.register_blueprint(mod_adminpanel)
     # Set up navigation bar in adminpanel
-    setup_navigation(app, nav)
-    # Add navigation bar item to the main navigation bar
-    nav_bar.items.append(nav.Item('Admin Panel', 'adminpanel.index', constraints=[nav.Item.REQUIRELOGIN]))
+    setup_navigation(app, app.nav)
+    # Setup main menu bar items
+    nav_bar.items.append(app.nav.Item('Admin Panel', 'adminpanel.index', constraints=[nav.Item.REQUIRELOGIN]))
 
 
 # Sets up a navigation menu item for each module with mod_adminpanel integration.

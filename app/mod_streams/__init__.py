@@ -1,2 +1,8 @@
-def setup_module(nav, nav_bar):
-    nav_bar.items.append(nav.Item('Streams', 'streams.index'))
+from .views import mod_streams
+
+
+def setup_module(app, nav_bar):
+    # Register blueprint
+    app.register_blueprint(mod_streams)
+    # Setup main menu bar items
+    nav_bar.items.append(app.nav.Item('Streams', 'streams.index'))
