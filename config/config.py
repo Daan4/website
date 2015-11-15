@@ -1,5 +1,7 @@
 import os
-import website_config as c
+
+from config import website_config as c
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 #  Flask-WTF settings
@@ -8,7 +10,7 @@ SECRET_KEY = c.SECRET_KEY  # Secret key used for CSRF
 
 # Flask-SQLAlchemy settings
 # sqlite3
-#SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')  # Path to database file
+# SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')  # Path to database file
 SQLALCHEMY_DATABASE_URI = c.SQLALCHEMY_DATABASE_URI
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')  # SQLAlchemy-migrate data file directory
 

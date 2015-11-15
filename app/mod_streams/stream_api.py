@@ -1,10 +1,11 @@
-import urllib.request
 import json
+import threading
+import urllib.request
 from urllib.error import URLError
+
 from app import app, db
 from app.mod_streams.models import Stream
-import threading
-import website_config as c
+from config import website_config as c
 
 TWITCH_API_CLIENT_ID = c.TWITCH_API_CLIENT_ID
 TWITCH_API_CLIENT_SECRET = c.TWITCH_API_CLIENT_SECRET
