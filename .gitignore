@@ -3,6 +3,7 @@ tmp/
 
 # config; an example config is provided in website_config.py.example
 /config/website_config.py
+/config/website_test_config.py
 
 # virtualenv
 /virtualenv
