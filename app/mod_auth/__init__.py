@@ -1,5 +1,6 @@
 from flask_login import LoginManager
 from flask import Blueprint
+from .models import User
 
 mod_auth = None
 lm = None
@@ -18,3 +19,7 @@ def setup_module(app, nav, nav_bar):
     lm = LoginManager()
     lm.init_app(app)
     lm.login_view = 'auth.login'
+
+    @lm.user_loader
+    def load_user(id_):
+        return User.query.get(int(id_))

@@ -1,9 +1,8 @@
 from app import app
-from flask import g, flash, redirect, url_for, session, request, render_template,\
-    Blueprint
+from flask import g, flash, redirect, url_for, session, request, render_template
 from .forms import LoginForm
 from .models import User
-from . import mod_auth, lm
+from . import mod_auth
 from flask_login import login_user, login_required, logout_user, current_user
 
 
@@ -45,11 +44,6 @@ def logout():
 @app.before_request
 def before_request():
     g.user = current_user
-
-
-@lm.user_loader
-def load_user(id_):
-    return User.query.get(int(id_))
 
 
 def user_is_logged_in():
