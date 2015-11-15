@@ -4,8 +4,12 @@ import unittest
 
 class BaseTestCase(unittest.TestCase):
     @classmethod
-    def setUpClass(cls, disable_login=False):
-        cls.app = create_app('config.test_config', disable_login)
+    def setUpClass(cls):
+        try:
+            cls.disable_login
+        except AttributeError:
+            cls.disable_login = False
+        cls.app = create_app('config.test_config', cls.disable_login)
         cls.client = cls.app.test_client()
         cls._ctx = cls.app.test_request_context()
         cls._ctx.push()
@@ -31,7 +35,8 @@ class BaseTestCase(unittest.TestCase):
 if __name__ == '__main__':
     from tests.mod_auth_tests import TestAuth
     from tests.mod_projects_tests import TestProjects
-    test_classes_to_run = [TestAuth, TestProjects]
+    from tests.mod_streams_tests import TestStreams
+    test_classes_to_run = [TestAuth, TestProjects, TestStreams]
     # Run all test cases in test_classes_to_run
     loader = unittest.TestLoader()
     suites_list = [loader.loadTestsFromTestCase(x) for x in test_classes_to_run]
