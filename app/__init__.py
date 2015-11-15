@@ -27,11 +27,9 @@ import app.mod_streams as streams_module
 import app.mod_adminpanel as adminpanel_module
 import app.mod_auth as auth_module
 import app.mod_todo as todo_module
-projects_module.setup_module(app, nav_bar)
-streams_module.setup_module(app, nav_bar)
-adminpanel_module.setup_module(app, nav_bar)
-auth_module.setup_module(app, nav_bar)
-todo_module.setup_module(app, nav_bar)
+modules = [projects_module, streams_module, adminpanel_module, auth_module, todo_module]
+for module in modules:
+    module.setup_module(app, nav_bar)
 
 # Setup error handling
 import logging
