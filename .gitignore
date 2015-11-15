@@ -23,5 +23,5 @@ how to create db.txt
 TODO.txt
 
 # javascript libraries
-/static/jquery-2.1.4.js
-/static/showdown.js
+app/static/jquery-2.1.4.js
+app/static/showdown.js
