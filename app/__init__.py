@@ -31,10 +31,12 @@ from app.mod_projects.views import mod_projects as projects_blueprint
 from app.mod_streams.views import mod_streams as streams_blueprint
 from app.mod_adminpanel.views import mod_adminpanel as adminpanel_blueprint
 from app.mod_auth.views import mod_auth as auth_blueprint
+from app.mod_todo.views import mod_todo as todo_blueprint
 app.register_blueprint(projects_blueprint)
 app.register_blueprint(streams_blueprint)
 app.register_blueprint(adminpanel_blueprint)
 app.register_blueprint(auth_blueprint)
+app.register_blueprint(todo_blueprint)
 
 # Setup modules
 # The order of calling setup_module determines the order of the main navigation bar items.
@@ -43,10 +45,12 @@ import app.mod_projects as projects_module
 import app.mod_streams as streams_module
 import app.mod_adminpanel as adminpanel_module
 import app.mod_auth as auth_module
+import app.mod_todo as todo_module
 projects_module.setup_module(nav, nav_bar)
 streams_module.setup_module(nav, nav_bar)
 adminpanel_module.setup_module(app, nav, nav_bar)
 auth_module.setup_module(nav, nav_bar)
+todo_module.setup_module(nav, nav_bar)
 
 # Setup error handling
 import logging
