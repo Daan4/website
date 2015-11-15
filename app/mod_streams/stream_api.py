@@ -1,9 +1,8 @@
 import json
-import threading
 import urllib.request
 from urllib.error import URLError
-
-from app import app, db
+from flask import current_app
+from app import db
 from app.mod_streams.models import Stream
 # todo: stream api shouldnt import website_config directly
 # todo: get api stream url from config
@@ -22,15 +21,15 @@ def get_twitch_stream_object(channels):
         response = urllib.request.urlopen(url)
     except URLError as e:
         if hasattr(e, 'reason'):
-            app.logger.exception('We failed to reach a server. Reason: {}'.format(e.reason))
+            current_app.logger.exception('We failed to reach a server. Reason: {}'.format(e.reason))
         elif hasattr(e, 'code'):
-            app.logger.exception('The server couldn\'t fulfill the request. Error code: {}'.format(e.code))
+            current_app.logger.exception('The server couldn\'t fulfill the request. Error code: {}'.format(e.code))
 
     return json.loads(response.read().decode('utf8'))
 
 
 def update_stream_info(auto_update=True):
-    app.logger.info("Updating stream info.")
+    current_app.logger.info("Updating stream info.")
     stream_object = get_twitch_stream_object([x.channel for x in Stream.query.all()])
     online_streams_found = list()
     for stream in stream_object['streams']:
