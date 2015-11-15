@@ -1,6 +1,6 @@
 import os
 
-from config import website_config as c
+from config import website_test_config as c
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
