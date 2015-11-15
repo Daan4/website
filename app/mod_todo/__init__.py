@@ -1,6 +1,8 @@
 from .views import mod_todo
+from app import register_module
 
 
+@register_module()
 def setup_module(app, nav, nav_bar):
     # Register blueprint
     app.register_blueprint(mod_todo)

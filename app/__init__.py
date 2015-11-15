@@ -4,7 +4,6 @@ from .navigation import MyNavigation as Navigation
 from .navigation import NavBarItem as Item
 from flaskext.markdown import Markdown
 import logging
-import importlib
 from logging.handlers import RotatingFileHandler
 
 # Flask
@@ -22,17 +21,24 @@ nav = Navigation(app)
 # Create main navigation bar and add Home button.
 nav.Bar('base', [nav.Item('Home', 'index')])
 
+
 # Setup modules
-# The order of calling setup_module determines the order of the main navigation bar items.
-nav_bar = nav['base']
-import app.mod_projects as projects_module
-import app.mod_streams as streams_module
-import app.mod_adminpanel as adminpanel_module
-import app.mod_auth as auth_module
-import app.mod_todo as todo_module
-modules = [projects_module, streams_module, adminpanel_module, auth_module, todo_module]
-for module in modules:
-    module.setup_module(app, nav, nav_bar)
+module_setup_functions = []
+
+
+def register_module():
+    def decorator(f):
+        module_setup_functions.append(f)
+        return f
+    return decorator
+import app.mod_projects as mod_projects
+import app.mod_streams as mod_streams
+import app.mod_auth as mod_auth
+import app.mod_adminpanel as mod_adminpanel
+import app.mod_todo as mod_todo
+for f in module_setup_functions:
+    f(app, nav, nav['base'])
+
 
 # Setup error handling
 # if not app.debug:
@@ -69,8 +75,3 @@ app.logger.info('website startup')
 app.logger.debug('website startup')
 
 from app import views, models
-from app.mod_projects import views, models
-from app.mod_streams import views, models
-from app.mod_auth import views, models
-from app.mod_adminpanel import views
-from app.mod_todo import views, models
