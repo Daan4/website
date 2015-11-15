@@ -11,7 +11,7 @@ mod_auth = Blueprint('auth', __name__, url_prefix='/user', template_folder='temp
 def login():
     if user_is_logged_in():
         flash('User {} is already logged in.'.format(g.user.username))
-        return redirect(url_for('index'))
+        return redirect(url_for('root.index'))
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
