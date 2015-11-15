@@ -1,13 +1,8 @@
-from flask import Blueprint
-
-mod_adminpanel = None
-registered_adminpanels = {}
+from .views import mod_adminpanel
 
 
 def setup_module(app, nav, nav_bar):
     # Register blueprint
-    global mod_adminpanel
-    mod_adminpanel = Blueprint('adminpanel', __name__, url_prefix='/adminpanel', template_folder='templates')
     app.register_blueprint(mod_adminpanel)
     # Set up navigation bar in adminpanel
     setup_navigation(app, nav)

@@ -1,11 +1,12 @@
-from flask import render_template, flash
+from flask import render_template, flash, Blueprint
 from app import db
 from .models import Project
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from .forms import EditProjectForm
 from app.mod_adminpanel.views import register_adminpanel
-from . import mod_projects
+
+mod_projects = Blueprint('projects', __name__, url_prefix='/projects', template_folder='templates')
 
 
 @mod_projects.route('/', methods=['GET'])

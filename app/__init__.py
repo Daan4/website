@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from .navigation import MyNavigation as Navigation
 from .navigation import NavBarItem as Item
 from flaskext.markdown import Markdown
+import logging
+import importlib
+from logging.handlers import RotatingFileHandler
 
 # Flask
 app = Flask(__name__)
@@ -32,8 +35,6 @@ for module in modules:
     module.setup_module(app, nav, nav_bar)
 
 # Setup error handling
-import logging
-
 # if not app.debug:
 #     # Via email
 #     from logging.handlers import SMTPHandler
@@ -43,10 +44,6 @@ import logging
 #     mail_handler = SMTPHandler((MAIL_SERVER, MAIL_PORT), 'no-reply@' + MAIL_SERVER, ADMINS, 'www.daanlubbers.nl failure', credentials)
 #     mail_handler.setLevel(logging.ERROR)
 #     app.logger.addHandler(mail_handler)
-
-from logging.handlers import RotatingFileHandler
-
-
 class DebugRotatingFileHandler(RotatingFileHandler):
     def __init__(self, filename, mode='a', max_bytes=0, backup_count=0, encoding=None, delay=False):
         RotatingFileHandler.__init__(self, filename, mode, max_bytes, backup_count, encoding, delay)
@@ -72,3 +69,8 @@ app.logger.info('website startup')
 app.logger.debug('website startup')
 
 from app import views, models
+from app.mod_projects import views, models
+from app.mod_streams import views, models
+from app.mod_auth import views, models
+from app.mod_adminpanel import views
+from app.mod_todo import views, models

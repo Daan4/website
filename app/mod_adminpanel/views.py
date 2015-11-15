@@ -1,6 +1,8 @@
-from flask import render_template, abort
+from flask import render_template, abort, Blueprint
 from flask_login import login_required
-from . import mod_adminpanel, registered_adminpanels
+
+mod_adminpanel = Blueprint('adminpanel', __name__, url_prefix='/adminpanel', template_folder='templates')
+registered_adminpanels = {}
 
 
 @mod_adminpanel.route('/')
