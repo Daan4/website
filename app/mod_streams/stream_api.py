@@ -2,21 +2,19 @@ import json
 import urllib.request
 from urllib.error import URLError
 from flask import current_app
-from app import db
-from app.mod_streams.models import Stream
+from .models import *
 # todo: stream api shouldnt import website_config directly
 # todo: get api stream url from config
-from config import website_config as c
 
-TWITCH_API_CLIENT_ID = c.TWITCH_API_CLIENT_ID
-TWITCH_API_CLIENT_SECRET = c.TWITCH_API_CLIENT_SECRET
-TWITCH_API_STREAM_URL = 'https://api.twitch.tv/kraken/streams/?channel='
+get_twitch_api_client_id = lambda: current_app.config['TWITCH_API_CLIENT_ID']
+get_twitch_api_client_secret = lambda: current_app.config['TWITCH_API_CLIENT_SECRET']
+get_twitch_api_stream_url = lambda: current_app.config['TWITCH_API_STREAM_URL']
 
 
 def get_twitch_stream_object(channels):
     response = None
     channels_string = ','.join(channels)
-    url = TWITCH_API_STREAM_URL + channels_string
+    url = get_twitch_api_stream_url() + channels_string
     try:
         response = urllib.request.urlopen(url)
     except URLError as e:
@@ -28,7 +26,7 @@ def get_twitch_stream_object(channels):
     return json.loads(response.read().decode('utf8'))
 
 
-def update_stream_info(auto_update=True):
+def update_stream_info():
     current_app.logger.info("Updating stream info.")
     stream_object = get_twitch_stream_object([x.channel for x in Stream.query.all()])
     online_streams_found = list()

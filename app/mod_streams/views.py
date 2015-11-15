@@ -21,7 +21,7 @@ def index():
         session['chat_enabled'] = request.form.getlist('enable_chat')
         if active_stream == 'Refresh':
             active_stream = None
-            stream_api.update_stream_info(auto_update=False)
+            stream_api.update_stream_info()
             flash("Stream info refreshed!")
     return render_template('streams.html',
                            title='Streams',
