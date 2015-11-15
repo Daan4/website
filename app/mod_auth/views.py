@@ -1,11 +1,10 @@
-from app import lm, app
+from app import app
 from flask import g, flash, redirect, url_for, session, request, render_template,\
     Blueprint
 from .forms import LoginForm
 from .models import User
+from . import mod_auth, lm
 from flask_login import login_user, login_required, logout_user, current_user
-
-mod_auth = Blueprint('auth', __name__, url_prefix='/user', template_folder='templates')
 
 
 @mod_auth.route('/login', methods=['GET', 'POST'])
