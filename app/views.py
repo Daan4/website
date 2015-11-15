@@ -1,39 +1,22 @@
 from time import time
-from app import app, db
-from flask import render_template, g, request, session, url_for
+from app import db
+from flask import render_template, g, request, session, url_for, Blueprint
+
+mod_base = Blueprint('base', __name__, url_prefix='/')
 
 
-@app.route('/')
+@mod_base.route('/')
 def index():
     return render_template('index.html')
 
 
-@app.errorhandler(404)
-def not_found_error(error):
-    try:
-        redirect_url = session['previous_page']
-    except KeyError:
-        redirect_url = url_for('index')
-    return render_template('404.html', title='404', redirect_url=redirect_url), 404
-
-
-@app.errorhandler(500)
-def internal_error(error):
-    db.session.rollback()
-    try:
-        redirect_url = session['previous_page']
-    except KeyError:
-        redirect_url = url_for('index')
-    return render_template('500.html', title='500', redirect_url=redirect_url), 500
-
-
-@app.before_request
+@mod_base.before_request
 def before_request():
     # Save current time to be used after the request to display the time the request took to complete.
     g.start_time = time()
 
 
-@app.after_request
+@mod_base.after_request
 def after_request(response):
     """ Replace the string __EXECUTION_TIME__ in the reponse with the actual
     execution time. """
@@ -48,3 +31,22 @@ def after_request(response):
             # Response doesn't contain the text __EXECUTION_TIME__
             pass
     return response
+
+
+def setup_error_handlers(app):
+    @mod_base.errorhandler(404)
+    def not_found_error(error):
+        try:
+            redirect_url = session['previous_page']
+        except KeyError:
+            redirect_url = url_for('index')
+        return render_template('404.html', title='404', redirect_url=redirect_url), 404
+
+    @mod_base.errorhandler(500)
+    def internal_error(error):
+        db.session.rollback()
+        try:
+            redirect_url = session['previous_page']
+        except KeyError:
+            redirect_url = url_for('index')
+        return render_template('500.html', title='500', redirect_url=redirect_url), 500

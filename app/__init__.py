@@ -26,9 +26,12 @@ def create_app(config):
     nav.init_app(app)
 
     # Create main navigation bar and add Home button.
-    nav.Bar('base', [nav.Item('Home', 'index')])
+    nav.Bar('base', [nav.Item('Home', 'base.index')])
 
     # Setup modules
+    from .views import mod_base, setup_error_handlers
+    app.register_blueprint(mod_base)
+    setup_error_handlers(app)
     import app.mod_projects as mod_projects
     import app.mod_streams as mod_streams
     import app.mod_auth as mod_auth

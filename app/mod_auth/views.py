@@ -1,7 +1,6 @@
-from app import app
-from flask import g, flash, redirect, url_for, session, request, render_template, Blueprint
-from .forms import LoginForm
-from .models import User
+from flask import g, flash, redirect, url_for, session, request, render_template, Blueprint, current_app
+from .models import *
+from .forms import *
 from flask_login import login_user, login_required, logout_user, current_user
 
 mod_auth = Blueprint('auth', __name__, url_prefix='/user', template_folder='templates',
@@ -43,7 +42,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.before_request
+@mod_auth.before_app_request
 def before_request():
     g.user = current_user
 
