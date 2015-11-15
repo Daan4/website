@@ -6,8 +6,7 @@ from app.mod_streams.models import Stream
 from app.mod_streams import stream_api
 from .forms import ConfigForm
 from app.mod_adminpanel.views import register_adminpanel
-
-mod_streams = Blueprint('streams', __name__, url_prefix='/streams', template_folder='templates')
+from . import mod_streams
 
 
 @mod_streams.route('/', methods=['GET', 'POST'])

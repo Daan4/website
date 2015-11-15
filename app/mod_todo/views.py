@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template
-
-mod_todo = Blueprint('todo', __name__, url_prefix='/todo', template_folder='templates')
+from flask import render_template
+from . import mod_todo
 
 
 @mod_todo.route('/')
