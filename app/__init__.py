@@ -6,7 +6,7 @@ nav = MyNavigation()
 module_setup_functions = []
 
 
-def create_app(config, disable_login):
+def create_app(config, disable_login=False):
     # Flask
     from flask import Flask
     app = Flask(__name__)
