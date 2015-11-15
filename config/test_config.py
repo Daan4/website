@@ -5,7 +5,7 @@ from config import website_test_config as c
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 #  Flask-WTF settings
-WTF_CSRF_ENABLED = True  # Activates cross-site request forgery prevention (CSRF)
+WTF_CSRF_ENABLED = False  # Activates cross-site request forgery prevention (CSRF)
 SECRET_KEY = c.SECRET_KEY  # Secret key used for CSRF
 
 # Flask-SQLAlchemy settings
