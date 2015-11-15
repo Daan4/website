@@ -29,7 +29,7 @@ import app.mod_auth as auth_module
 import app.mod_todo as todo_module
 modules = [projects_module, streams_module, adminpanel_module, auth_module, todo_module]
 for module in modules:
-    module.setup_module(app, nav_bar)
+    module.setup_module(app, nav, nav_bar)
 
 # Setup error handling
 import logging
