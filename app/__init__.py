@@ -6,11 +6,13 @@ nav = MyNavigation()
 module_setup_functions = []
 
 
-def create_app(config):
+def create_app(config, disable_login):
     # Flask
     from flask import Flask
     app = Flask(__name__)
     app.config.from_object(config)
+    if disable_login:
+        app.config['LOGIN_DISABLED'] = True
 
     # SQLAlchemy
     db.init_app(app)
