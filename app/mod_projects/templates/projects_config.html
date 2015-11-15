@@ -1,4 +1,6 @@
 {% extends "adminpanel.html" %}
+{% include "jquery.html" %}
+{% include "showdown.html" %}
 {% block configuration %}
     PROJECTS CONFIGURATION<br><br>
     {% if edit_form %}
@@ -10,7 +12,6 @@
         </form>
     {% endif %}
     <br><br>
-    <script src="{{ url_for('static', filename='showdown.js') }}"></script>
     CONTENT MARKDOWN PREVIEW
     <div id="content_preview">
 
