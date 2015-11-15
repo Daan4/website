@@ -24,7 +24,7 @@ def login():
             flash('User {} logged in.'.format(username))
             next_view = request.args.get('next')
             if not next_view or next_view == '{}/logout'.format(mod_auth.url_prefix):
-                return redirect(url_for('index'))
+                return redirect(url_for('root.index'))
             else:
                 return redirect(next_view)
         flash('Login failed: incorrect username or password entered.')
@@ -39,7 +39,7 @@ def logout():
         logout_user()
     else:
         flash('Logout failed: no user was logged in.')
-    return redirect(url_for('index'))
+    return redirect(url_for('root.index'))
 
 
 @mod_auth.before_app_request
