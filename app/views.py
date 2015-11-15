@@ -39,7 +39,7 @@ def setup_error_handlers(app):
         try:
             redirect_url = session['previous_page']
         except KeyError:
-            redirect_url = url_for('index')
+            redirect_url = url_for('root.index')
         return render_template('404.html', title='404', redirect_url=redirect_url), 404
 
     @app.errorhandler(500)
@@ -48,5 +48,5 @@ def setup_error_handlers(app):
         try:
             redirect_url = session['previous_page']
         except KeyError:
-            redirect_url = url_for('index')
+            redirect_url = url_for('root.index')
         return render_template('500.html', title='500', redirect_url=redirect_url), 500
