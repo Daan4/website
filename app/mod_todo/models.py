@@ -4,9 +4,9 @@ from app.models import BaseModel
 
 class Todo(BaseModel):
     todo = db.Column(db.Text, index=True)
-    status_id = db.Column(db.Integer, db.ForeignKey('todostatus.id'))
-    category_id = db.Column(db.Integer, db.ForeignKey('todocategory.id'))
-    priority_id = db.Column(db.Integer, db.ForeignKey('todopriority.id'))
+    status_id = db.Column(db.Integer, db.ForeignKey('todo_status.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('todo_category.id'))
+    priority_id = db.Column(db.Integer, db.ForeignKey('todo_priority.id'))
     closed_on = db.Column(db.DateTime)
     do_before = db.Column(db.DateTime)
 
