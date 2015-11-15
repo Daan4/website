@@ -3,18 +3,17 @@ from app.mod_auth.models import *
 from app.mod_auth.views import user_is_logged_in
 from flask import url_for
 
-
-TEST_USERNAME = 'username'
-TEST_PASSWORD = 'password'
-TEST_INVALID_USERNAME = 'wrong_username'
-TEST_INVALID_PASSWORD = 'wrong_password'
+USERNAME = 'username'
+PASSWORD = 'password'
+INVALID_USERNAME = 'wrong_username'
+INVALID_PASSWORD = 'wrong_password'
 
 
 class TestAuth(BaseTestCase):
     def setUp(self):
         super().setUp()
-        test_user = User(username=TEST_USERNAME, password=TEST_PASSWORD)
-        db.session.add(test_user)
+        user = User(username=USERNAME, password=PASSWORD)
+        db.session.add(user)
         db.session.commit()
 
     def login(self, username, password):
@@ -28,18 +27,18 @@ class TestAuth(BaseTestCase):
 
     def test_login(self):
         with self.client:
-            self.login(TEST_INVALID_USERNAME, TEST_PASSWORD)
+            self.login(INVALID_USERNAME, PASSWORD)
             self.assertFalse(user_is_logged_in())
-            self.login(TEST_USERNAME, TEST_INVALID_PASSWORD)
+            self.login(USERNAME, INVALID_PASSWORD)
             self.assertFalse(user_is_logged_in())
-            self.login(TEST_INVALID_USERNAME, TEST_INVALID_PASSWORD)
+            self.login(INVALID_USERNAME, INVALID_PASSWORD)
             self.assertFalse(user_is_logged_in())
-            self.login(TEST_USERNAME, TEST_PASSWORD)
+            self.login(USERNAME, PASSWORD)
             self.assertTrue(user_is_logged_in())
 
     def test_logout(self):
         with self.client:
-            self.login(TEST_USERNAME, TEST_PASSWORD)
+            self.login(USERNAME, PASSWORD)
             self.assertTrue(user_is_logged_in())
             self.logout()
             self.assertFalse(user_is_logged_in())
