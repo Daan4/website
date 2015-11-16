@@ -45,55 +45,19 @@ def do_adminpanel_logic():
         priority_name = form.priority_name.data
         priority_value = form.priority_value.data
         if form.create_category.data:
-            create_todo_category(category)
+            TodoCategory.create('Category {} added'.format(category),
+                                'Category {} already exists'.format(category),
+                                category=category)
         elif form.delete_category.data:
-            delete_todo_category(category)
+            TodoCategory.delete('Category {} deleted'.format(category),
+                                'Category {} doesn\'t exist'.format(category),
+                                category=category)
         elif form.create_priority.data:
-            create_todo_priority(priority_name, priority_value)
+            TodoPriority.create('Priority {} added'.format(priority_name),
+                                'Priority {} already exists'.format(priority_name),
+                                name=priority_name, priority=priority_value)
         elif form.delete_priority.data:
-            delete_todo_priority(priority_name)
+            TodoPriority.delete('Priority {} deleted'.format(priority_name),
+                                'Priority {} doesn\'t exist'.format(priority_name),
+                                name=priority_name)
     return render_template('todo_config.html', form=form, title='Admin Panel - ToDo')
-
-
-def create_todo_category(category):
-    new_category = TodoCategory(category=category)
-    try:
-        db.session.add(new_category)
-        db.session.commit()
-        flash('Category {} added'.format(category))
-    except (IntegrityError, InvalidRequestError):
-        db.session.rollback()
-        flash('Category {} already exists'.format(category))
-
-
-def delete_todo_category(category):
-    existing_category = TodoCategory.query.filter_by(category=category).first()
-    try:
-        db.session.delete(existing_category)
-        db.session.commit()
-        flash('Category {} removed'.format(category))
-    except UnmappedInstanceError:
-        db.session.rollback()
-        flash('Category {} doesn\'t exist'.format(category))
-
-
-def create_todo_priority(name, value):
-    new_priority = TodoPriority(name=name, priority=value)
-    try:
-        db.session.add(new_priority)
-        db.session.commit()
-        flash('Priority {} added'.format(name))
-    except (IntegrityError, InvalidRequestError):
-        db.session.rollback()
-        flash('Priority {} already exists'.format(name))
-
-
-def delete_todo_priority(name):
-    existing_priority = TodoPriority.query.filter_by(name=name).first()
-    try:
-        db.session.delete(existing_priority)
-        db.session.commit()
-        flash('Priority {} removed'.format(name))
-    except UnmappedInstanceError:
-        db.session.rollback()
-        flash('Priority {} doesn\'t exist'.format(name))
