@@ -24,7 +24,7 @@ class BaseModel(db.Model):
                 flash(failure_msg)
 
     @classmethod
-    def delete(cls, success_msg=None, failure_msg=None, **kwargs):
+    def delete(cls, success_msg=None, unmapped_msg=None, failure_msg=None,  **kwargs):
         existing_record = cls.query.filter_by(**kwargs).first()
         try:
             db.session.delete(existing_record)
@@ -32,6 +32,10 @@ class BaseModel(db.Model):
             if success_msg:
                 flash(success_msg)
         except UnmappedInstanceError:
+            db.session.rollback()
+            if unmapped_msg:
+                flash(unmapped_msg)
+        except IntegrityError:
             db.session.rollback()
             if failure_msg:
                 flash(failure_msg)
