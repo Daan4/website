@@ -2,12 +2,14 @@ from flask import *
 from .forms import *
 from .models import *
 from app.mod_adminpanel.views import register_adminpanel
+from flask_login import login_required
 
 mod_todo = Blueprint('todo', __name__, url_prefix='/todo', template_folder='templates',
                      static_folder='static')
 
 
 @mod_todo.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
     form = CreateTodoItemForm()
     form.category.choices = [(c.id, c.category) for c in TodoCategory.query.all()]
