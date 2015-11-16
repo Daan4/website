@@ -40,12 +40,12 @@ def do_adminpanel_logic():
         if config_form.add.data:
             for channel in channels:
                 Stream.create('Channel {} added'.format(channel),
-                              'Channel {} already exists'.format(channel),
+                              'Failed: Channel {} already exists'.format(channel),
                               channel=channel)
         elif config_form.remove.data:
             for channel in channels:
                 Stream.delete('Channel {} deleted'.format(channel),
-                              'Channel {} doesn\'t exist'.format(channel),
+                              'Failed: Channel {} doesn\'t exist'.format(channel),
                               channel=channel)
         elif config_form.load.data:
             if selected_channels:
