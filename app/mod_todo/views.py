@@ -16,7 +16,7 @@ def index():
     if ids_to_delete:
         for id_ in ids_to_delete.split(','):
             Todo.delete(id=id_)
-    ids_to_complete = request.args.get('done')
+    ids_to_complete = request.args.get('complete')
     if ids_to_complete:
         for id_ in ids_to_complete.split(','):
             todo = Todo.query.filter_by(id=id_).first()

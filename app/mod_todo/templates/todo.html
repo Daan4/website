@@ -18,7 +18,7 @@
             <a href="{{ url_for('todo.index', delete=item.id) }}">
                 <img src="{{ url_for('static', filename='red_x.png') }}" height = 20px>
             </a>
-            <a href="{{ url_for('todo.index', done=item.id) }}">
+            <a href="{{ url_for('todo.index', complete=item.id) }}">
                 <img src="{{ url_for('static', filename='green_check.png') }}" height = 20px>
             </a>
             {{ item.id }}:
