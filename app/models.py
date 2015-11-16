@@ -32,10 +32,10 @@ class BaseModel(db.Model):
             if success_msg:
                 flash(success_msg)
         except UnmappedInstanceError:
-            db.session.rollback()
             if unmapped_msg:
                 flash(unmapped_msg)
         except IntegrityError:
-            db.session.rollback()
             if failure_msg:
                 flash(failure_msg)
+        finally:
+            db.session.rollback()
