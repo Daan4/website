@@ -1,7 +1,4 @@
-from flask import Blueprint, request, render_template, flash, session
-from app import db
-from sqlalchemy.exc import IntegrityError, InvalidRequestError
-from sqlalchemy.orm.exc import UnmappedInstanceError
+from flask import *
 from app.mod_streams.models import Stream
 from app.mod_streams import stream_api
 from .forms import ConfigForm
@@ -41,40 +38,19 @@ def do_adminpanel_logic():
         if config_form.channel.data:
             channels = config_form.channel.data.split(',')
         if config_form.add.data:
-            add_streams(channels, config_form)
+            for channel in channels:
+                Stream.create('Channel {} added'.format(channel),
+                              'Channel {} already exists'.format(channel),
+                              channel=channel)
         elif config_form.remove.data:
-            delete_streams(channels, config_form)
+            for channel in channels:
+                Stream.delete('Channel {} deleted'.format(channel),
+                              'Channel {} doesn\'t exist'.format(channel),
+                              channel=channel)
         elif config_form.load.data:
             if selected_channels:
                 load_stream(selected_channels, config_form)
     return render_template('streams_config.html', config_form=config_form, title='Admin Panel - Streams')
-
-
-def add_streams(channels, form):
-    for channel in channels:
-        stream = Stream(channel=channel)
-        try:
-            db.session.add(stream)
-            db.session.commit()
-            # Add newly added channel to the drop-down selection list.
-            form.all_channels.choices.append((stream.channel, stream.channel))
-            flash('Channel {} added'.format(channel))
-        except (IntegrityError, InvalidRequestError):
-            db.session.rollback()
-            flash('Channel {} already exists in the database'.format(channel))
-
-
-def delete_streams(channels, form):
-    for channel in channels:
-        stream = Stream.query.filter_by(channel=channel).first()
-        try:
-            db.session.delete(stream)
-            db.session.commit()
-            form.all_channels.choices.remove((stream.channel, stream.channel))
-            flash('Channel {} removed'.format(channel))
-        except UnmappedInstanceError:
-            db.session.rollback()
-            flash('Channel {} doesn\'t exist in the database'.format(channel))
 
 
 def load_stream(channels, form):
