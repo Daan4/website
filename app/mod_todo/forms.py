@@ -9,7 +9,7 @@ class CreateTodoItemForm(Form):
     todo = TextAreaField('Todo', validators=[DataRequired()])
     category = NonValidatingSelectField('Category')
     priority = NonValidatingSelectField('Priority')
-    do_before = DateTimeField('Do before')
+    do_before = DateTimeField('Do before', validators=[Optional()])
     create = SubmitField('Create')
 
 
