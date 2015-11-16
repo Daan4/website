@@ -34,42 +34,39 @@ class TestProjects(BaseTestCase):
         ))
 
     def test_add(self):
-        with self.client:
-            # Test that adding a project works
-            self.add_project(NAME, CONTENT)
-            project = Project.query.filter_by(name=NAME).first()
-            self.assertIsInstance(project, Project)
-            self.assertEquals(project.name, NAME)
-            self.assertEquals(project.content, CONTENT)
-            # todo: implement. currently fails because of db.session.rollback() in view
-            # # Test that adding an existing project updates the content
-            # self.add_project(NAME, '')
-            # project = Project.query.filter_by(name=NAME).first()
-            # self.assertEquals(project.content, '')
-            # Test that the project name is required
-            self.add_project('', CONTENT)
-            project = Project.query.filter_by(name='').first()
-            self.assertIsNone(project)
+        # Test that adding a project works
+        self.add_project(NAME, CONTENT)
+        project = Project.query.filter_by(name=NAME).first()
+        self.assertIsInstance(project, Project)
+        self.assertEquals(project.name, NAME)
+        self.assertEquals(project.content, CONTENT)
+        # todo: implement. currently fails because of db.session.rollback() in view
+        # Test that adding an existing project updates the content
+        # self.add_project(NAME, '')
+        # project = Project.query.filter_by(name=NAME).first()
+        # self.assertEquals(project.content, '')
+        # Test that the project name is required
+        self.add_project('', CONTENT)
+        project = Project.query.filter_by(name='').first()
+        self.assertIsNone(project)
 
     def test_remove(self):
-        with self.client:
-            # Test that removing a project works
-            self.add_project(NAME, CONTENT)
-            self.remove_project(NAME, CONTENT)
-            project = Project.query.filter_by(name=NAME).first()
-            self.assertIsNone(project)
-            # Test that removing a non-existent project works
-            self.remove_project(NAME, CONTENT)
-            # Test that the project name is required
-            project = Project(name='', content=CONTENT)
-            db.session.add(project)
-            db.session.commit()
-            project = Project.query.filter_by(name='').first()
-            self.assertIsInstance(project, Project)
+        # Test that removing a project works
+        self.add_project(NAME, CONTENT)
+        self.remove_project(NAME, CONTENT)
+        project = Project.query.filter_by(name=NAME).first()
+        self.assertIsNone(project)
+        # Test that removing a non-existent project works
+        self.remove_project(NAME, CONTENT)
+        # Test that the project name is required
+        project = Project(name='', content=CONTENT)
+        db.session.add(project)
+        db.session.commit()
+        project = Project.query.filter_by(name='').first()
+        self.assertIsInstance(project, Project)
 
     def test_load(self):
-        with self.client:
-            self.add_project(NAME, CONTENT)
-            rv = self.load_project(NAME)
-            self.assertIn(CONTENT.encode(), rv.data)
-            self.assertIn(NAME.encode(), rv.data)
+        self.add_project(NAME, CONTENT)
+        rv = self.load_project(NAME)
+        self.assertIn(CONTENT.encode(), rv.data)
+        self.assertIn(NAME.encode(), rv.data)
