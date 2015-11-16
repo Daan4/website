@@ -1,0 +1,11 @@
+div#todo_items {
+    display: inline;
+}
+
+div.open_todo_item {
+    color: white;
+}
+
+div.completed_todo_item {
+    color: green;
+}

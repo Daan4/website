@@ -11,6 +11,17 @@ mod_todo = Blueprint('todo', __name__, url_prefix='/todo', template_folder='temp
 @mod_todo.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
+    # Check for items to delete and complete, and then delete and complete them.
+    ids_to_delete = request.args.get('delete')
+    if ids_to_delete:
+        for id_ in ids_to_delete.split(','):
+            Todo.delete(id=id_)
+    ids_to_complete = request.args.get('done')
+    if ids_to_complete:
+        for id_ in ids_to_complete.split(','):
+            todo = Todo.query.filter_by(id=id_).first()
+            if isinstance(todo, Todo):
+                todo.complete()
     form = CreateTodoItemForm()
     form.category.choices = [(c.id, c.category) for c in TodoCategory.query.all()]
     form.priority.choices = [(p.id, p.name) for p in TodoPriority.query.all()]
@@ -25,7 +36,7 @@ def index():
                         category_id=category,
                         priority_id=priority,
                         do_before=do_before)
-    return render_template('todo.html', form=form, todo_items=Todo.query.all())
+    return render_template('todo.html', form=form, todo_items=Todo.query.order_by(Todo.id).all())
 
 
 @register_adminpanel(mod_todo.name)

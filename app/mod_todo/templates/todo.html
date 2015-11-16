@@ -1,6 +1,7 @@
 {% from "macros.html" import render_field %}
 {% extends "base.html" %}
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('todo.static', filename='todo_style.css') }}">
     Create new item<br><br>
     {% if form %}
         <form action="" method="post" name="config" id="form">
@@ -12,7 +13,21 @@
     {% endif %}
     <br><br>
     ToDo:<br><br>
-    {% for item in todo_items %}
-        {{ item.get_category() }}, {{ item.get_priority() }}, {{ item.todo }}<br>
-    {% endfor %}
+    <div id="todo_items">
+        {% for item in todo_items %}
+            <a href="{{ url_for('todo.index', delete=item.id) }}">
+                <img src="{{ url_for('static', filename='red_x.png') }}" height = 20px>
+            </a>
+            <a href="{{ url_for('todo.index', done=item.id) }}">
+                <img src="{{ url_for('static', filename='green_check.png') }}" height = 20px>
+            </a>
+            {{ item.id }}:
+            {{ item.get_category() }},
+            {{ item.get_priority() }}{% if item.do_before %},
+            {{ item.do_before }}{% endif %} |
+            <div class="{{ 'open_todo_item' if not item.closed_on else 'completed_todo_item' }}">
+                {{ item.todo }}<br>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -18,6 +18,10 @@ class Todo(BaseModel):
     def get_priority(self):
         return TodoPriority.query.filter_by(id=self.priority_id).first().name
 
+    def complete(self):
+        self.closed_on = db.func.current_timestamp()
+        db.session.commit()
+
 
 class TodoCategory(BaseModel):
     category = db.Column(db.String(64), unique=True, index=True)
