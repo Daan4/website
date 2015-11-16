@@ -60,6 +60,7 @@ def add_streams(channels, form):
             form.all_channels.choices.append((stream.channel, stream.channel))
             flash('Channel {} added'.format(channel))
         except (IntegrityError, InvalidRequestError):
+            db.session.rollback()
             flash('Channel {} already exists in the database'.format(channel))
 
 
@@ -72,6 +73,7 @@ def delete_streams(channels, form):
             form.all_channels.choices.remove((stream.channel, stream.channel))
             flash('Channel {} removed'.format(channel))
         except UnmappedInstanceError:
+            db.session.rollback()
             flash('Channel {} doesn\'t exist in the database'.format(channel))
 
 

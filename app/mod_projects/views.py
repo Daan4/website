@@ -48,13 +48,13 @@ def add_project(name, content, form):
         # A project with this name already exists, update its content instead.
         db.session.rollback()
         project = Project.query.filter_by(name=name).first()
-        project.content = content
         try:
             db.session.add(project)
             db.session.commit()
             flash('Project {} content updated'.format(name))
         except Exception as e:
             # todo: which exceptions can occur?
+            db.session.rollback()
             raise e
 
 
@@ -66,6 +66,7 @@ def delete_project(name, form):
         form.all_projects.choices.remove((project.name, project.name))
         flash('Project {} removed'.format(name))
     except UnmappedInstanceError:
+        db.session.rollback()
         flash('Project {} doesn\'t exist in the database'.format(name))
 
 
