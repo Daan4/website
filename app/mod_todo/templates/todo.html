@@ -1,7 +1,7 @@
 {% from "macros.html" import render_field %}
 {% extends "base.html" %}
 {% block content %}
-    TODO
+    Create new item<br><br>
     {% if form %}
         <form action="" method="post" name="config" id="form">
             {{ form.hidden_tag() }}
@@ -10,4 +10,9 @@
             {% endfor %}
         </form>
     {% endif %}
+    <br><br>
+    ToDo:<br><br>
+    {% for item in todo_items %}
+        {{ item.get_category() }}, {{ item.get_priority() }}, {{ item.todo }}<br>
+    {% endfor %}
 {% endblock %}

@@ -12,6 +12,12 @@ class Todo(BaseModel):
     def __repr__(self):
         return '<Todo item: {}>'.format(self.id)
 
+    def get_category(self):
+        return TodoCategory.query.filter_by(id=self.category_id).first().category
+
+    def get_priority(self):
+        return TodoPriority.query.filter_by(id=self.priority_id).first().name
+
 
 class TodoCategory(BaseModel):
     category = db.Column(db.String(64), unique=True, index=True)

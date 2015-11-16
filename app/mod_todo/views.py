@@ -1,8 +1,6 @@
 from flask import *
 from .forms import *
 from .models import *
-from sqlalchemy.exc import *
-from sqlalchemy.orm.exc import *
 from app.mod_adminpanel.views import register_adminpanel
 
 mod_todo = Blueprint('todo', __name__, url_prefix='/todo', template_folder='templates',
@@ -20,21 +18,12 @@ def index():
             category = form.category.data
             priority = form.priority.data
             do_before = form.do_before.data
-            add_todo_item(todo, category, priority, do_before)
-            flash('New todo item created')
-    return render_template('todo.html', form=form)
-
-
-def add_todo_item(todo, category_id, priority_id, do_before):
-    pass
-
-
-def close_todo_item(todo_id):
-    pass
-
-
-def remove_todo_item(todo_id):
-    pass
+            Todo.create('New todo item added',
+                        todo=todo,
+                        category_id=category,
+                        priority_id=priority,
+                        do_before=do_before)
+    return render_template('todo.html', form=form, todo_items=Todo.query.all())
 
 
 @register_adminpanel(mod_todo.name)
@@ -46,18 +35,20 @@ def do_adminpanel_logic():
         priority_value = form.priority_value.data
         if form.create_category.data:
             TodoCategory.create('Category {} added'.format(category),
-                                'Category {} already exists'.format(category),
+                                'Failed: Category {} already exists'.format(category),
                                 category=category)
         elif form.delete_category.data:
             TodoCategory.delete('Category {} deleted'.format(category),
-                                'Category {} doesn\'t exist'.format(category),
+                                'Failed: Category {} doesn\'t exist'.format(category),
+                                'Failed: Category {} is still in use by some todo items'.format(category),
                                 category=category)
         elif form.create_priority.data:
             TodoPriority.create('Priority {} added'.format(priority_name),
-                                'Priority {} already exists'.format(priority_name),
+                                'Failed: Priority {} already exists'.format(priority_name),
                                 name=priority_name, priority=priority_value)
         elif form.delete_priority.data:
             TodoPriority.delete('Priority {} deleted'.format(priority_name),
-                                'Priority {} doesn\'t exist'.format(priority_name),
+                                'Failed: Priority {} doesn\'t exist'.format(priority_name),
+                                'Failed: Priority {} is still in use by some todo items'.format(priority_name),
                                 name=priority_name)
     return render_template('todo_config.html', form=form, title='Admin Panel - ToDo')
