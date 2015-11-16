@@ -1,5 +1,4 @@
-from flask_wtf import Form
-from wtforms import TextAreaField, StringField, SubmitField
+from wtforms import *
 from app.validators import RequiredWhenFieldsHaveData
 from app.fields import NonValidatingSelectField
 
