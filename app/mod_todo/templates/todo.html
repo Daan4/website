@@ -1,4 +1,13 @@
+{% from "macros.html" import render_field %}
 {% extends "base.html" %}
 {% block content %}
-TODO
+    TODO
+    {% if form %}
+        <form action="" method="post" name="config" id="form">
+            {{ form.hidden_tag() }}
+            {% for field in form %}
+                {{ render_field(field) }}
+            {% endfor %}
+        </form>
+    {% endif %}
 {% endblock %}
