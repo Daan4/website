@@ -1,0 +1,12 @@
+{% extends "adminpanel.html" %}
+{% block configuration %}
+    TODO CONFIGURATION<br><br>
+    {% if form %}
+        <form action="" method="post" name="config" id="form">
+            {{ form.hidden_tag() }}
+            {% for field in form %}
+                {{ render_field(field) }}
+            {% endfor %}
+        </form>
+    {% endif %}
+{% endblock %}
