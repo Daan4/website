@@ -2,10 +2,12 @@ div#todo_items {
     display: inline;
 }
 
-div.open_todo_item {
+.open_todo_item {
     color: white;
+    display: inline;
 }
 
-div.completed_todo_item {
+.completed_todo_item {
     color: green;
+    display: inline;
 }

@@ -1,4 +1,7 @@
-{% from "macros.html" import render_field %}
+{% macro get_href(orderby=None, order=None, delete=None, complete=None) %}
+    {{ url_for('todo.index', delete=delete, complete=complete, orderby=orderby, order=order) }}
+{% endmacro %}
+{% from "macros.html" import render_field, render_datetime %}
 {% extends "base.html" %}
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('todo.static', filename='todo_style.css') }}">
@@ -9,25 +12,38 @@
             {% for field in form %}
                 {{ render_field(field) }}
             {% endfor %}
-        </form>
+        </form><br><br>
     {% endif %}
-    <br><br>
-    ToDo:<br><br>
     <div id="todo_items">
+        <table>
+            <tr>
+                <td>ToDo</td>
+                <td>Delete</td>
+                <td>Complete</td>
+                <td><a href="{{ get_href('category', 'asc') }}">Category</a></td>
+                <td><a href="{{ get_href('priority', 'asc') }}">Priority</a></td>
+                <td><a href="{{ get_href('do_before', 'asc') }}">Do before</a></td>
+                <td><a href="{{ get_href('created_on', 'asc') }}">Created on</a></td>
+                <td><a href="{{ get_href('completed_on', 'asc') }}">Completed on</a></td>
+            </tr>
         {% for item in todo_items %}
-            <a href="{{ url_for('todo.index', delete=item.id) }}">
-                <img src="{{ url_for('static', filename='red_x.png') }}" height = 20px>
-            </a>
-            <a href="{{ url_for('todo.index', complete=item.id) }}">
-                <img src="{{ url_for('static', filename='green_check.png') }}" height = 20px>
-            </a>
-            {{ item.id }}:
-            {{ item.get_category() }},
-            {{ item.get_priority() }}{% if item.do_before %},
-            {{ item.do_before }}{% endif %} |
-            <div class="{{ 'open_todo_item' if not item.closed_on else 'completed_todo_item' }}">
-                {{ item.todo }}<br>
-            </div>
+            <tr>
+                <td class="{{ 'open_todo_item' if not item.completed_on else 'completed_todo_item' }}">
+                    {{ item.todo }}
+                </td>
+                <td><a href="{{ get_href(request.args.get('orderby'), request.args.get('order'), item.id) }}">
+                    <img src="{{ url_for('static', filename='red_x.png') }}" height = 20px>
+                </a></td>
+                <td><a href="{{ get_href(request.args.get('orderby'), request.args.get('order'), complete=item.id) }}">
+                    <img src="{{ url_for('static', filename='green_check.png') }}" height = 20px>
+                </a></td>
+                <td>{{ item.get_category() }}</td>
+                <td>{{ item.get_priority() }}</td>
+                <td>{{ render_datetime(item.do_before) if item.do_before else '' }}</td>
+                <td>{{ render_datetime(item.date_created) }}</td>
+                <td>{{ render_datetime(item.completed_on) if item.completed_on else '' }}</td>
+            </tr>
         {% endfor %}
+        </table>
     </div>
 {% endblock %}
