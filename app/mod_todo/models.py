@@ -19,8 +19,13 @@ class Todo(BaseModel):
         return TodoPriority.query.filter_by(id=self.priority_id).first().name
 
     def complete(self):
-        self.closed_on = db.func.current_timestamp()
-        db.session.commit()
+        if not self.closed_on:
+            self.closed_on = db.func.current_timestamp()
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
+                raise
 
 
 class TodoCategory(BaseModel):
