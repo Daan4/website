@@ -7,7 +7,7 @@ TODO = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occur
 TODO2 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Sin tantum modo'
 CATEGORY = 'Category'
 PRIORITY = 'Priority'
-DO_BEFORE = datetime.datetime(2020, 12, 12)
+DO_BEFORE = datetime.date(2020, 12, 12)
 
 
 class TestTodo(BaseTestCase):
@@ -41,7 +41,7 @@ class TestTodo(BaseTestCase):
         self.assertIsInstance(todo_item, Todo)
         self.assertEquals(todo_item.category_id, 1)
         self.assertEquals(todo_item.priority_id, 1)
-        self.assertEquals(todo_item.do_before, DO_BEFORE)
+        self.assertEquals(todo_item.do_before.date(), DO_BEFORE)
         # Test that adding an empty item fails
         self.create_todo_item('', 1, 1, DO_BEFORE)
         todo_item = Todo.query.filter_by(todo='').first()
