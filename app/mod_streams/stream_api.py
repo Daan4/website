@@ -3,8 +3,6 @@ import urllib.request
 from urllib.error import URLError
 from flask import current_app
 from .models import *
-# todo: stream api shouldnt import website_config directly
-# todo: get api stream url from config
 
 
 def get_twitch_api_client_id(): return current_app.config['TWITCH_API_CLIENT_ID']
