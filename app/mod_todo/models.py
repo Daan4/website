@@ -6,7 +6,7 @@ class Todo(BaseModel):
     todo = db.Column(db.Text, index=True)
     category_id = db.Column(db.Integer, db.ForeignKey('todo_category.id'))
     priority_id = db.Column(db.Integer, db.ForeignKey('todo_priority.id'))
-    closed_on = db.Column(db.DateTime)
+    completed_on = db.Column(db.DateTime)
     do_before = db.Column(db.DateTime)
 
     def __repr__(self):
@@ -19,8 +19,8 @@ class Todo(BaseModel):
         return TodoPriority.query.filter_by(id=self.priority_id).first().name
 
     def complete(self):
-        if not self.closed_on:
-            self.closed_on = db.func.current_timestamp()
+        if not self.completed_on:
+            self.completed_on = db.func.current_timestamp()
             try:
                 db.session.commit()
             except:

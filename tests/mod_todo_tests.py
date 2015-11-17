@@ -65,17 +65,17 @@ class TestTodo(BaseTestCase):
         self.create_todo_item(TODO, 1, 1, DO_BEFORE)
         self.complete_todo_items([1])
         todo = Todo.query.filter_by(id=1).first()
-        timedelta = datetime.datetime.now() - todo.closed_on
+        timedelta = datetime.datetime.now() - todo.completed_on
         self.assertLess(timedelta, datetime.timedelta(seconds=0.1))
         # Test trying to complete the same item again doesn't change the closed on time.
-        old_closed_on = todo.closed_on
+        old_completed_on = todo.completed_on
         self.complete_todo_items([1])
         todo = Todo.query.filter_by(id=1).first()
-        self.assertEquals(old_closed_on, todo.closed_on)
+        self.assertEquals(old_completed_on, todo.completed_on)
         # Test completing multiple items
         self.create_todo_item(TODO, 1, 1, DO_BEFORE)
         self.create_todo_item(TODO2, 1, 1, DO_BEFORE)
         self.complete_todo_items([2, 3])
         todo = Todo.query.filter(Todo.id.in_([2, 3])).all()
         for item in todo:
-            self.assertIsNotNone(item.closed_on)
+            self.assertIsNotNone(item.completed_on)
