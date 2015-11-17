@@ -12,9 +12,7 @@ INVALID_PASSWORD = 'wrong_password'
 class TestAuth(BaseTestCase):
     def setUp(self):
         super().setUp()
-        user = User(username=USERNAME, password=PASSWORD)
-        db.session.add(user)
-        db.session.commit()
+        User.create(username=USERNAME, password=PASSWORD)
 
     def login(self, username, password):
         return self.client.post(url_for('auth.login'), data=dict(
