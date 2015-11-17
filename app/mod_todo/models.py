@@ -12,11 +12,11 @@ class Todo(BaseModel):
     def __repr__(self):
         return '<Todo item: {}>'.format(self.id)
 
-    def __getattr__(self, attr):
-        if attr == 'category':
-            return TodoCategory.query.filter_by(id=self.category_id).first().category
-        elif attr == 'priority':
-            return TodoPriority.query.filter_by(id=self.priority_id).first().name
+    def get_category(self):
+        return TodoCategory.query.filter_by(id=self.category_id).first().category
+
+    def get_priority(self):
+        return TodoPriority.query.filter_by(id=self.priority_id).first().name
 
     def complete(self):
         if not self.completed_on:
@@ -24,6 +24,7 @@ class Todo(BaseModel):
             try:
                 db.session.commit()
             except:
+                # todo: which exceptions can occur?
                 db.session.rollback()
                 raise
 
