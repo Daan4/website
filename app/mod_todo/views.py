@@ -3,6 +3,7 @@ from .forms import *
 from .models import *
 from app.mod_adminpanel.views import register_adminpanel
 from flask_login import login_required
+from sqlalchemy import desc
 
 mod_todo = Blueprint('todo', __name__, url_prefix='/todo', template_folder='templates',
                      static_folder='static')
@@ -11,17 +12,13 @@ mod_todo = Blueprint('todo', __name__, url_prefix='/todo', template_folder='temp
 @mod_todo.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    # Check for items to delete and complete, and then delete and complete them.
-    ids_to_delete = request.args.get('delete')
-    if ids_to_delete:
-        for id_ in ids_to_delete.split(','):
-            Todo.delete(id=id_)
-    ids_to_complete = request.args.get('complete')
-    if ids_to_complete:
-        for id_ in ids_to_complete.split(','):
-            todo = Todo.query.filter_by(id=id_).first()
-            if isinstance(todo, Todo):
-                todo.complete()
+    # Check for items to delete, then delete those items
+    delete_todo_items(request.args.get('delete'))
+    # Check for items to complete, then complete those items
+    complete_todo_items(request.args.get('complete'))
+    # Get ordering
+    todo_items = get_ordered_todo_items(request.args.get('orderby'), request.args.get('order'))
+    # Do create form logic
     form = CreateTodoItemForm()
     form.category.choices = [(c.id, c.category) for c in TodoCategory.query.all()]
     form.priority.choices = [(p.id, p.name) for p in TodoPriority.query.all()]
@@ -36,7 +33,38 @@ def index():
                         category_id=category,
                         priority_id=priority,
                         do_before=do_before)
-    return render_template('todo.html', form=form, todo_items=Todo.query.order_by(Todo.id).all())
+    return render_template('todo.html', form=form, todo_items=todo_items)
+
+
+def delete_todo_items(ids):
+    if ids:
+        for id_ in ids.split(','):
+            Todo.delete(id=id_)
+
+
+def complete_todo_items(ids):
+    if ids:
+        for id_ in ids.split(','):
+            todo = Todo.query.filter_by(id=id_).first()
+            if isinstance(todo, Todo):
+                todo.complete()
+
+
+def get_ordered_todo_items(order_by, order):
+    order_by_args = None
+    if order_by == 'category':
+        order_by_args = Todo.category_id
+    elif order_by == 'priority':
+        order_by_args = Todo.priority_id
+    elif order_by == 'do_before':
+        order_by_args = Todo.do_before
+    elif order_by == 'created_on':
+        order_by_args = Todo.date_created
+    elif order_by == 'completed_on':
+        order_by_args = Todo.completed_on
+    if order == 'desc':
+        order_by_args = desc(order_by_args)
+    return Todo.query.order_by(order_by_args).all()
 
 
 @register_adminpanel(mod_todo.name)

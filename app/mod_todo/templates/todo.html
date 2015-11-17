@@ -1,4 +1,17 @@
 {% macro get_href(orderby=None, order=None, delete=None, complete=None) %}
+    {% if not order %}
+        {% set order = request.args.get('order') %}
+    {% endif %}
+    {% if not delete and not complete %}
+        {% if not order or order == 'desc' %}
+            {% set order = 'asc' %}
+        {% elif order == 'asc' %}
+            {% set order = 'desc' %}
+        {% endif %}
+    {% endif %}
+    {% if not orderby %}
+        {% set orderby = request.args.get('orderby') %}
+    {% endif %}
     {{ url_for('todo.index', delete=delete, complete=complete, orderby=orderby, order=order) }}
 {% endmacro %}
 {% from "macros.html" import render_field, render_datetime %}
@@ -20,25 +33,25 @@
                 <td>ToDo</td>
                 <td>Delete</td>
                 <td>Complete</td>
-                <td><a href="{{ get_href('category', 'asc') }}">Category</a></td>
-                <td><a href="{{ get_href('priority', 'asc') }}">Priority</a></td>
-                <td><a href="{{ get_href('do_before', 'asc') }}">Do before</a></td>
-                <td><a href="{{ get_href('created_on', 'asc') }}">Created on</a></td>
-                <td><a href="{{ get_href('completed_on', 'asc') }}">Completed on</a></td>
+                <td><a href="{{ get_href('category') }}">Category</a></td>
+                <td><a href="{{ get_href('priority') }}">Priority</a></td>
+                <td><a href="{{ get_href('do_before') }}">Do before</a></td>
+                <td><a href="{{ get_href('created_on') }}">Created on</a></td>
+                <td><a href="{{ get_href('completed_on') }}">Completed on</a></td>
             </tr>
         {% for item in todo_items %}
             <tr>
                 <td class="{{ 'open_todo_item' if not item.completed_on else 'completed_todo_item' }}">
                     {{ item.todo }}
                 </td>
-                <td><a href="{{ get_href(request.args.get('orderby'), request.args.get('order'), item.id) }}">
+                <td><a href="{{ get_href(delete=item.id) }}">
                     <img src="{{ url_for('static', filename='red_x.png') }}" height = 20px>
                 </a></td>
-                <td><a href="{{ get_href(request.args.get('orderby'), request.args.get('order'), complete=item.id) }}">
+                <td><a href="{{ get_href(complete=item.id) }}">
                     <img src="{{ url_for('static', filename='green_check.png') }}" height = 20px>
                 </a></td>
-                <td>{{ item.get_category() }}</td>
-                <td>{{ item.get_priority() }}</td>
+                <td>{{ item.category }}</td>
+                <td>{{ item.priority }}</td>
                 <td>{{ render_datetime(item.do_before) if item.do_before else '' }}</td>
                 <td>{{ render_datetime(item.date_created) }}</td>
                 <td>{{ render_datetime(item.completed_on) if item.completed_on else '' }}</td>
