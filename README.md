@@ -1,3 +1,4 @@
+easy to use
 Quick start:
 
 install dependencies from requirements.txt
