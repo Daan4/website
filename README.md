@@ -1,4 +1,4 @@
-Quick start:
+Quick start: -An amazing project
 
 install dependencies from requirements.txt
 
