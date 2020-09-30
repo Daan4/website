@@ -11,7 +11,7 @@ from app import db, create_app
 app = create_app('config.config')
 
 # Flask-Migrate
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, compare_type=True)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
