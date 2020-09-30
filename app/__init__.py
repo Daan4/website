@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from .navigation import *
+import os
 
 db = SQLAlchemy()
 nav = MyNavigation()
@@ -62,6 +63,8 @@ def create_app(config, disable_login=False):
 
     # Via file
     # INFO or higher
+    if not os.path.exists("tmp"):
+        os.mkdir("tmp")
     file_handler = RotatingFileHandler('tmp/website.log', 'a', 1 * 1024 * 1024, 10)
     file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d'))
     app.logger.setLevel(logging.DEBUG)
