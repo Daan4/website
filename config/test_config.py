@@ -12,6 +12,7 @@ SECRET_KEY = c.SECRET_KEY  # Secret key used for CSRF
 # sqlite3
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')  # Path to database file
 SQLALCHEMY_DATABASE_URI = c.SQLALCHEMY_DATABASE_URI
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')  # SQLAlchemy-migrate data file directory
 
 
