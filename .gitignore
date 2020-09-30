@@ -1,5 +1,5 @@
-# temporary files
-/tmp/
+# log files
+*/tmp/
 
 # virtualenv
 /venv/
