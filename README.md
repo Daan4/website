@@ -32,20 +32,16 @@ pip install -r requirements.txt
 ```
 
 # 2. Usage:
-<p>setup postgresql database (utf8 encoding, match username, pass & db name with config) </p>
-<p> i. Run the python file (ttt.py) </p>
+<p> Setup postgresql database (utf8 encoding, match username, pass & db name with config) </p>
+<p> Setup website_config.py and config.py </p>
+
+
+<p> i. Run the python file (db_create.py) </p>
+<p> ii. Run the python file (run.py) </p>
 
 <p> Or type the command in terminal/command prompt: </p>
 
 ```
-python ttt.py
+python db_create.py
+python run.py
 ```
-Quick start:
-
-
-
-setup website_config.py and config.py
-
-run db_create.py
-
-run run.py
