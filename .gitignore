@@ -1,24 +1,21 @@
 # temporary files
-tmp/
+/tmp/
+
+# virtualenv
+/venv/
 
 # config; an example config is provided in website_config.py.example
 /config/website_config.py
 /config/website_test_config.py
 
-# virtualenv
-/virtualenv
-
 # migrations
-/migrations
+/migrations/
 
 # pycharm files
-/.idea
+/.idea/
 
 # pycache
-__pycache__/
-
-# cmd commands and database password
-how to create db.txt
+/__pycache__/
 
 # list of stuff to do
 TODO.txt
