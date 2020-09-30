@@ -1,3 +1,4 @@
+logru-my amazing project
 Quick start:
 
 install dependencies from requirements.txt
