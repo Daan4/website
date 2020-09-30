@@ -63,15 +63,15 @@ def create_app(config, disable_login=False):
 
     # Via file
     # INFO or higher
-    if not os.path.exists("tmp"):
-        os.mkdir("tmp")
-    file_handler = RotatingFileHandler('tmp/website.log', 'a', 1 * 1024 * 1024, 10)
+    if not os.path.exists("log"):
+        os.mkdir("log")
+    file_handler = RotatingFileHandler('log/website.log', 'a', 1 * 1024 * 1024, 10)
     file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d'))
     app.logger.setLevel(logging.DEBUG)
     file_handler.setLevel(logging.INFO)
     app.logger.addHandler(file_handler)
     # DEBUG only
-    file_handler = DebugRotatingFileHandler('tmp/website_DEBUG.log', 'a', 1 * 1024 * 1024, 10)
+    file_handler = DebugRotatingFileHandler('log/website_DEBUG.log', 'a', 1 * 1024 * 1024, 10)
     file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d'))
     file_handler.setLevel(logging.DEBUG)
     app.logger.addHandler(file_handler)
