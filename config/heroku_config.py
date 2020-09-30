@@ -2,6 +2,10 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+# Flask settings
+HOST = '0.0.0.0'
+PORT = int(os.environ.get('PORT', 5000))
+
 #  Flask-WTF settings
 WTF_CSRF_ENABLED = True  # Activates cross-site request forgery prevention (CSRF)
 SECRET_KEY = os.environ.get('SECRET_KEY')  # Secret key used for CSRF
