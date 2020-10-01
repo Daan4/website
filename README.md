@@ -1,5 +1,6 @@
-# website
-This is a simple personal website made using Python and Flask
+# Website
+A Website made using Latest Version Of Python and It's Framework FLASK.
+It's is for an open source contribution inside the community.
 # Developed Using:
 <ul>
   <li> python 3.8.4 </li>
@@ -27,14 +28,14 @@ pip install -r requirements.txt
 Then, run these command in the Command Prompt or Terminal.
 
 ```
-cd website
+cd website/
 pip install -r requirements.txt
 ```
 
 # 2. Usage:
 <p> Setup postgresql database (utf8 encoding, match username, pass & db name with config) </p>
 <p> Setup website_config.py and config.py </p>
-
+NOTE: dB class name should be matched with the ones in file.
 
 <p> i. Run the python file (db_create.py) </p>
 <p> ii. Run the python file (run.py) </p>
