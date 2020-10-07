@@ -11,15 +11,6 @@ SQLALCHEMY_DATABASE_URI = 'postgresql://{}:{}@{}/{}'.format(DATABASE_USERNAME,
                                                             DATABASE_HOST,
                                                             DATABASE_NAME)
 
-# Mail settings
-MAIL_HOST = "localhost"
-MAIL_PORT = "25"
-MAIL_USERNAME = None
-MAIL_PASSWORD = None
-
-# Admin emails
-ADMINS = ['you@example.com']
-
 # Twitch settings
 TWITCH_API_CLIENT_ID = 'twitch_client_id'
 TWITCH_API_CLIENT_SECRET = 'twitch_client_secret'
