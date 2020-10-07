@@ -1,10 +1,10 @@
 {% from "macros.html" import render_field %}
 {% extends "base.html" %}
 {% block content %}
-    <ul class="navigation_bar">
+    <ul>
         {% for item in nav.adminpanel %}
             <li class="menu_item">
-                <a class="{{ 'active_menu_item' if item.is_active else 'menu_item' }}"
+                <a
                    href="{{ item.url }}">
                     {{ item.label }}
                 </a>

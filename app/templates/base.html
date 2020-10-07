@@ -1,14 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='icon.ico') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% if title %}
-    <title>{{ title }} - www.daanlubbers.nl</title>
+        <title>{{ title }} · www.daanlubbers.nl</title>
     {% else %}
-    <title>www.daanlubbers.nl</title>
+        <title>www.daanlubbers.nl</title>
     {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <ul class="nav nav-pills">
+                {% for item in nav.main if item.show() %}
+                    <li class="nav-item">
+                        {% if item.is_active %}
+                            <a class="nav-link active" href="{{ item.url }}">{{ item.label }}</a>
+                        {% else %}
+                            <a class="nav-link" href="{{ item.url }}">{{ item.label }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li><div>>{{ message }}<</div></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}
+        {% endblock %}
+
+        <div>
+            Rendered with <a href="https://flask.palletsprojects.com/">Flask</a> in __EXECUTION_TIME__ · <a href="https://github.com/Daan4/website">GitHub</a> · © Daan Lubbers 2020
+        </div>
+    </div>
+
     <script>
         function startTime() {
             var today = new Date();
@@ -25,40 +62,6 @@
             if (i < 10) {i = "0" + i};
             return i;
         }
+        startTime();
     </script>
-</head>
-<body onload="startTime()">
-    <ul class="navigation_bar">
-        {% for item in nav.main %}
-            {% if item.show() %}
-                <li class="menu_item">
-            {% else %}
-                <li class="hidden_menu_item">
-            {% endif %}
-                <a class="{% if item.is_active %}
-                          active_menu_item
-                          {% else %}
-                          menu_item
-                          {% endif %}"
-                href="{{ item.url }}">
-                    {{ item.label }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-    <span id="digital_clock"></span>
-    <br><hr>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul id="flash_list">
-                {% for message in messages %}
-                <li><div class="flash">>{{ message }}<</div></li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-    <div id="page_content">{% block content %}{% endblock %}</div>
-    <div id="footer"><hr>Rendered by <a class="footer" href="https://flask.pocoo.org/">Flask</a> in __EXECUTION_TIME__ - <a class="footer" href="https://github.com/Daan4/website">GitHub</a> - © Daan Lubbers 2020.<br></div>
-
-</body>
-</html>
+{% endblock %}

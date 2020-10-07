@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('streams.static', filename='streams_style.css') }}">
     {% if active_stream %}
         <iframe id="player"
                 width="1280"
@@ -26,16 +25,16 @@
        {% if session['chat_enabled'] %}
            checked
        {% endif %}>Chat enabled
-        <button type="submit" class="refresh_button" name="submit" value="Refresh">
-            <span class="refresh_button_text">Refresh</span>
+        <button type="submit" name="submit" value="Refresh">
+            <span>Refresh</span>
         </button><br>
         {% for stream in streams %}
-            <button type="submit" class="stream_button" name="submit" value="{{ stream.channel }}">
-                <span class="stream_channel">{{ stream.channel }}</span><br>
+            <button type="submit" name="submit" value="{{ stream.channel }}">
+                <span>{{ stream.channel }}</span><br>
                 {% if stream.is_online %}
-                    <span class="stream_online">[{{ stream.game }}] [{{ stream.viewers }}]</span>
+                    <span>[{{ stream.game }}] [{{ stream.viewers }}]</span>
                 {% else %}
-                    <span class="stream_offline">[OFFLINE]</span>
+                    <span>[OFFLINE]</span>
                 {% endif %}
             </button>
         {% endfor %}
