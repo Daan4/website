@@ -3,12 +3,14 @@ from app.mod_streams.models import Stream
 from app.mod_streams import stream_api
 from .forms import ConfigForm
 from app.mod_adminpanel.views import register_adminpanel
+from flask_login import login_required
 
 mod_streams = Blueprint('streams', __name__, url_prefix='/streams', template_folder='templates',
                         static_folder='static')
 
 
 @mod_streams.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
     all_streams = Stream.query.order_by(Stream.is_online.desc(),
                                         Stream.viewers.desc()).all()

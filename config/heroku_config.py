@@ -13,16 +13,6 @@ SQLALCHEMY_DATABASE_URI = os.environ.get('HEROKU_POSTGRESQL_CYAN_URL')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')  # SQLAlchemy-migrate data file directory
 
-
-# mail server settings
-# MAIL_SERVER = c.MAIL_HOST
-# MAIL_PORT = c.MAIL_PORT
-# MAIL_USERNAME = c.MAIL_USERNAME
-# MAIL_PASSWORD = c.MAIL_PASSWORD
-
-# administrator list
-# ADMINS = c.ADMINS
-
 # stream api
 TWITCH_API_CLIENT_ID = os.environ.get('TWITCH_API_CLIENT_ID')
 TWITCH_API_CLIENT_SECRET = os.environ.get('TWITCH_API_CLIENT_SECRET')

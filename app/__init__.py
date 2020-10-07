@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
 from .navigation import *
 import os
 
@@ -17,6 +18,9 @@ def create_app(config, disable_login=False):
 
     # SQLAlchemy
     db.init_app(app)
+
+    # Bootstrap
+    Bootstrap(app)
 
     # Flask-Markdown
     from flaskext.markdown import Markdown
@@ -43,15 +47,7 @@ def create_app(config, disable_login=False):
     # Setup error handling
     import logging
     from logging.handlers import RotatingFileHandler
-    # if not app.debug:
-    #     # Via email
-    #     from logging.handlers import SMTPHandler
-    #     credentials = None
-    #     if MAIL_USERNAME or MAIL_PASSWORD:
-    #         credentials = (MAIL_USERNAME, MAIL_PASSWORD)
-    #     mail_handler = SMTPHandler((MAIL_SERVER, MAIL_PORT), 'no-reply@' + MAIL_SERVER, ADMINS, 'www.daanlubbers.nl failure', credentials)
-    #     mail_handler.setLevel(logging.ERROR)
-    #     app.logger.addHandler(mail_handler)
+
     class DebugRotatingFileHandler(RotatingFileHandler):
         def __init__(self, filename, mode='a', max_bytes=0, backup_count=0, encoding=None, delay=False):
             RotatingFileHandler.__init__(self, filename, mode, max_bytes, backup_count, encoding, delay)
