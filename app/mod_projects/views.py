@@ -5,12 +5,14 @@ from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from .forms import EditProjectForm
 from app.mod_adminpanel.views import register_adminpanel
+from flask_login import login_required
 
 mod_projects = Blueprint('projects', __name__, url_prefix='/projects', template_folder='templates',
                          static_folder='static')
 
 
 @mod_projects.route('/', methods=['GET'])
+@login_required
 def index():
     projects = Project.query.all()
     return render_template('projects.html', title="Projects", projects=projects)
