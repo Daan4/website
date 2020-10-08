@@ -2,9 +2,12 @@
 
 {% block head %}
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='icon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     {% if title %}
         <title>{{ title }} · www.daanlubbers.nl</title>
     {% else %}
@@ -14,35 +17,42 @@
 
 {% block body %}
     <div class="container">
-        <nav class="navbar navbar-default">
-            <ul class="nav nav-pills">
-                {% for item in nav.main if item.show() %}
-                    <li class="nav-item">
-                        {% if item.is_active %}
-                            <a class="nav-link active" href="{{ item.url }}">{{ item.label }}</a>
-                        {% else %}
-                            <a class="nav-link" href="{{ item.url }}">{{ item.label }}</a>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    {% for item in nav.main if item.show() %}
+                        <li class="nav-item">
+                            {% if item.is_active %}
+                                <a class="nav-link active" href="{{ item.url }}">{{ item.label }}</a>
+                            {% else %}
+                                <a class="nav-link" href="{{ item.url }}">{{ item.label }}</a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="text-light">
+                    <span id="digital_clock"></span>
+                </div>
+            </div>
         </nav>
 
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                        <li><div>>{{ message }}<</div></li>
-                    {% endfor %}
-                </ul>
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endif %}
         {% endwith %}
 
-        {% block content %}
-        {% endblock %}
-
-        <div>
-            Rendered with <a href="https://flask.palletsprojects.com/">Flask</a> in __EXECUTION_TIME__ · <a href="https://github.com/Daan4/website">GitHub</a> · © Daan Lubbers 2020
+        <div class="jumbotron">
+            {% block content %}
+            {% endblock %}
+            Rendered with <a href="https://flask.palletsprojects.com/">Flask</a> in __EXECUTION_TIME__ · <a href="https://github.com/Daan4/website">source</a> · © Daan Lubbers 2020
         </div>
     </div>
 
@@ -64,4 +74,8 @@
         }
         startTime();
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 {% endblock %}
