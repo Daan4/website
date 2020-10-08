@@ -8,14 +8,16 @@ It's is for an open source contribution inside the community.
   <li> SQL Alchemy module </li>
   <li> Sqlparse module </li>
   <li> blinker module & a lot more.</li>
+  <li> bootstrap theme https://bootswatch.com/cyborg/ </li>
 </ul>
 
 # 1. Installation & Requirements:
 <p> Clone the tool if you have git installed. </p>
-<b> <ul> Git Installation Guide: </b>
+<b> Git Installation Guide: </b>
+<ul>
   <li>Windows - https://git-scm.com/download/win </li>
   <li>Linux - https://git-scm.com/download/linux </li>
-  </ul>
+</ul>
 Then run these command in the Command Prompt or Terminal.
 
 ```
