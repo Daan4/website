@@ -1,17 +1,15 @@
 # Website
-A Website made using Latest Version Of Python and It's Framework FLASK.
-It's is for an open source contribution inside the community.
-# Developed Using:
+A personal website made using the Flask framework for Python
+
+# Using
 <ul>
-  <li> python 3.8.4 </li>
-  <li> Flask module </li>
-  <li> SQL Alchemy module </li>
-  <li> Sqlparse module </li>
-  <li> blinker module & a lot more.</li>
-  <li> bootstrap theme https://bootswatch.com/cyborg/ </li>
+  <li> Python</li>
+  <li> Flask </li>
+  <li> Postgres </li>
+  <li> Bootstrap (theme https://bootswatch.com/cyborg/) </li>
 </ul>
 
-# 1. Installation & Requirements:
+# 1. Installation & Requirements
 <p> Clone the tool if you have git installed. </p>
 <b> Git Installation Guide: </b>
 <ul>
@@ -35,9 +33,8 @@ pip install -r requirements.txt
 ```
 
 # 2. Usage:
-<p> Setup postgresql database (utf8 encoding, match username, pass & db name with config) </p>
-<p> Setup website_config.py and config.py </p>
-NOTE: dB class name should be matched with the ones in file.
+<p> Setup postgresql database (utf8 encoding, match username, pass & db name with the config settings) </p>
+<p> Setup website_config.py and config.py based on the given example config </p>
 
 <p> i. Run the python file (db_create.py) </p>
 <p> ii. Run the python file (run.py) </p>
