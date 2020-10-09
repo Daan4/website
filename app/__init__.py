@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from .navigation import *
 import os
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 db = SQLAlchemy()
 nav = MyNavigation()
@@ -15,6 +16,9 @@ def create_app(config, disable_login=False):
     app.config.from_object(config)
     if disable_login:
         app.config['LOGIN_DISABLED'] = True
+
+    # Fix for redirecting http to https
+    app.wsgi_app = ProxyFix(app.wsgi_app)
 
     # SQLAlchemy
     db.init_app(app)
