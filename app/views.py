@@ -1,6 +1,6 @@
 from time import time
 from app import db
-from flask import render_template, g, request, session, url_for, Blueprint
+from flask import render_template, g, request, session, url_for, Blueprint, redirect, current_app
 
 mod_root = Blueprint('root', __name__, url_prefix='/')
 
@@ -14,6 +14,11 @@ def index():
 def before_request():
     # Save current time to be used after the request to display the time the request took to complete.
     g.start_time = time()
+    # Redirect to https when not running in debug mode
+    if not current_app.debug and request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
 
 
 @mod_root.after_app_request
