@@ -1,5 +1,5 @@
-# Website
-A personal website made using the Flask framework for Python
+# An amazing Website:
+A personal website made using the Flask framework for Python.
 
 # Using
 <ul>
@@ -9,7 +9,7 @@ A personal website made using the Flask framework for Python
   <li> Bootstrap (theme https://bootswatch.com/cyborg/) </li>
 </ul>
 
-# 1. Installation & Requirements
+# 1. Installation & Requirements :
 <p> Clone the tool if you have git installed. </p>
 <b> Git Installation Guide: </b>
 <ul>
@@ -45,3 +45,5 @@ pip install -r requirements.txt
 python db_create.py
 python run.py
 ```
+### *I Hope You'll like this :star:*
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
