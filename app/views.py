@@ -23,9 +23,9 @@ def before_request():
 
 @mod_root.after_app_request
 def after_request(response):
-    """ Replace the string __EXECUTION_TIME__ in the reponse with the actual
-    execution time. """
-    session['previous_page'] = request.url
+    # Track previously visited url
+    session['previous_url'] = request.referrer
+    # Replace __EXECUTION_TIME__ string in the response with the actual execution time.
     diff = round((time() - g.start_time) * 1000)
     execution_time_string = "1 millisecond" if diff == 1 else "{} milliseconds".format(diff)
     if response.response:
@@ -42,7 +42,7 @@ def setup_error_handlers(app):
     @app.errorhandler(404)
     def not_found_error(error):
         try:
-            redirect_url = session['previous_page']
+            redirect_url = session['previous_url']
         except KeyError:
             redirect_url = url_for('root.index')
         return render_template('404.html', title='404', redirect_url=redirect_url), 404
@@ -51,7 +51,7 @@ def setup_error_handlers(app):
     def internal_error(error):
         db.session.rollback()
         try:
-            redirect_url = session['previous_page']
+            redirect_url = session['previous_url']
         except KeyError:
             redirect_url = url_for('root.index')
         return render_template('500.html', title='500', redirect_url=redirect_url), 500
