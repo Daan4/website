@@ -10,7 +10,3 @@ SQLALCHEMY_DATABASE_URI = 'postgresql://{}:{}@{}/{}'.format(DATABASE_USERNAME,
                                                             DATABASE_PASSWORD,
                                                             DATABASE_HOST,
                                                             DATABASE_NAME)
-
-# Twitch settings
-TWITCH_API_CLIENT_ID = 'twitch_client_id'
-TWITCH_API_CLIENT_SECRET = 'twitch_client_secret'

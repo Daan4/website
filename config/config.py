@@ -9,13 +9,6 @@ WTF_CSRF_ENABLED = True  # Activates cross-site request forgery prevention (CSRF
 SECRET_KEY = c.SECRET_KEY  # Secret key used for CSRF
 
 # Flask-SQLAlchemy settings
-# sqlite3
-# SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')  # Path to database file
 SQLALCHEMY_DATABASE_URI = c.SQLALCHEMY_DATABASE_URI
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')  # SQLAlchemy-migrate data file directory
-
-# stream api
-TWITCH_API_CLIENT_ID = c.TWITCH_API_CLIENT_ID
-TWITCH_API_CLIENT_SECRET = c.TWITCH_API_CLIENT_SECRET
-TWITCH_API_STREAM_URL = 'https://api.twitch.tv/kraken/streams/?channel='
