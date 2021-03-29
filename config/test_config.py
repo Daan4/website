@@ -13,5 +13,8 @@ SQLALCHEMY_DATABASE_URI = c.SQLALCHEMY_DATABASE_URI
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')  # SQLAlchemy-migrate data file directory
 
+# Flask settings
+SESSION_COOKIE_SAMESITE = 'STRICT'
+
 # testing
 TESTING = True
