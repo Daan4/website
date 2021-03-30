@@ -40,6 +40,7 @@ def create_app(config, disable_login=False):
     from .views import mod_root, setup_error_handlers
     app.register_blueprint(mod_root)
     setup_error_handlers(app)
+    import app.mod_nano as mod_nano
     import app.mod_auth as mod_auth
     for f in module_setup_functions:
         f(app, nav, nav['main'])
