@@ -69,7 +69,7 @@
             m = checkTime(m);
             s = checkTime(s);
             document.getElementById('digital_clock').innerHTML =
-            h + ":" + m + ":" + s + " " + d + "/" + (M + 1) + "/" + (y + 1900);
+            ("0" + h).slice(-2) + ":" + ("0" + m).slice(-2) + ":" + ("0" + s).slice(-2) + " " + ("0" + d).slice(-2) + "/" + ("0" + (M + 1)).slice(-2) + "/" + (y + 1900);
             var t = setTimeout(startTime, 500);
         }
         function checkTime(i) {
