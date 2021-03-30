@@ -18,7 +18,7 @@
 {% block body %}
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="collapse navbar-collapse" id="navbarColor01">
+            <div id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
                     {% for item in nav.main if item.show() %}
                         <li class="nav-item">
@@ -30,10 +30,8 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <div class="text-white">
-                    <span id="digital_clock"></span>
-                </div>
             </div>
+            <span class="text-white" id="digital_clock"></span>
         </nav>
 
         {% with messages = get_flashed_messages() %}
@@ -65,10 +63,13 @@
             var h = today.getHours();
             var m = today.getMinutes();
             var s = today.getSeconds();
+            var d = today.getDate();
+            var M = today.getMonth();
+            var y = today.getYear();
             m = checkTime(m);
             s = checkTime(s);
             document.getElementById('digital_clock').innerHTML =
-            h + ":" + m + ":" + s;
+            h + ":" + m + ":" + s + " " + d + "/" + (M + 1) + "/" + (y + 1900);
             var t = setTimeout(startTime, 500);
         }
         function checkTime(i) {
