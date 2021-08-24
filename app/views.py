@@ -1,4 +1,4 @@
-from time import time
+from datetime import datetime
 from app import db
 from flask import render_template, g, request, session, url_for, Blueprint, redirect, current_app
 
@@ -13,7 +13,7 @@ def index():
 @mod_root.before_app_request
 def before_request():
     # Save current time to be used after the request to display the time the request took to complete.
-    g.start_time = time()
+    g.start_time = datetime.now()
     # Redirect to https when not running in debug mode
     if not current_app.debug and not request.is_secure:
         url = request.url.replace('http://', 'https://')
@@ -26,8 +26,9 @@ def after_request(response):
     # Track previously visited url
     session['previous_url'] = request.referrer
     # Replace __EXECUTION_TIME__ string in the response with the actual execution time.
-    diff = round((time() - g.start_time) * 1000)
-    execution_time_string = "1 millisecond" if diff == 1 else "{} milliseconds".format(diff)
+    diff = datetime.now() - g.start_time
+    execution_time_string = f"{diff.microseconds/1000:g} milliseconds"
+    print(diff.microseconds/1000)
     if response.response:
         try:
             response.response[0] = response.response[0].replace('__EXECUTION_TIME__'.encode('utf-8'), execution_time_string.encode('utf-8'))
