@@ -1,6 +1,6 @@
 # log files
 /scripts/log/
-/log/
+log/
 
 # virtualenv
 /venv/
