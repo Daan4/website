@@ -2,23 +2,24 @@
 {% block content %}
     <form action="" method="post" name="login">
         {{ form.hidden_tag() }}
-        <p>
+        <div class="form-group">
             Username<br>
-            {{ form.username(size=20) }} <br>
+            {{ form.username(size=20, class_='form-control') }} <br>
             {% for error in form.username.errors %}
                 <span style="color: red;">[{{ error }}]</span> <br>
             {% endfor %}
-        </p>
-        <p>
+        </div>
+        <div class="form-group">
             Password<br>
-            {{ form.password(size=20) }} <br>
+            {{ form.password(size=20, class_='form-control') }} <br>
             {% for error in form.password.errors %}
                 <span style="color: red;">[{{ error }}]</span> <br>
             {% endfor %}
-        </p>
-        <p>
-            {{ form.remember_me }} Remember Me
-        </p>
-        <p><input type="submit" value="Sign In"></p>
+        </div>
+        <div class="form-check">
+            {{ form.remember_me(class_='form-check-input') }} Remember Me
+        </div>
+        <br/>
+        <p><input type="submit" class="btn btn-primary" value="Sign In"></p>
     </form>
 {% endblock %}
