@@ -16,5 +16,6 @@ SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')  # SQLAlchemy-m
 # Flask settings
 SESSION_COOKIE_SAMESITE = 'STRICT'
 
-# Nano settings
-NANO_NODE_IP = '65.21.110.208'
+# Cache settings
+CACHE_TYPE = "SimpleCache"
+CACHE_DEFAULT_TIMEOUT = 300
