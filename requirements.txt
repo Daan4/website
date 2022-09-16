@@ -17,7 +17,7 @@ Flask-WTF==0.15.1
 greenlet==1.1.1
 itsdangerous==2.0.1
 Jinja2==3.0.1
-Mako==1.1.5
+Mako==1.2.2
 Markdown==3.3.4
 MarkupSafe==2.0.1
 passlib==1.7.4
