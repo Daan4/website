@@ -20,5 +20,5 @@ SESSION_COOKIE_SAMESITE = 'STRICT'
 TESTING = True
 
 # Cache settings
-CACHE_TYPE = "SimpleCache"
+CACHE_TYPE = "NullCache"
 CACHE_DEFAULT_TIMEOUT = 300
