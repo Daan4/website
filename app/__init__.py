@@ -8,8 +8,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 db = SQLAlchemy()
 nav = MyNavigation()
 module_setup_functions = []
-cache = None
-
+cache = Cache()
 
 def create_app(config, disable_login=False):
     # Flask
@@ -23,8 +22,7 @@ def create_app(config, disable_login=False):
     app.wsgi_app = ProxyFix(app.wsgi_app)
 
     # Cache
-    global cache
-    cache = Cache(app)
+    cache.init_app(app)
 
     # SQLAlchemy
     db.init_app(app)

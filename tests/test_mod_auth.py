@@ -1,5 +1,5 @@
-from tests.test_app import BaseTestCase
-from app.mod_auth.models import *
+from tests.test_base import BaseTestCase
+from app.mod_auth.models import User
 from app.mod_auth.views import user_is_logged_in
 from flask import url_for
 
