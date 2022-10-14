@@ -29,7 +29,6 @@ def after_request(response):
     # Replace __EXECUTION_TIME__ string in the response with the actual execution time.
     diff = datetime.now() - g.start_time
     execution_time_string = f"{diff.microseconds/1000:g} milliseconds"
-    print(diff.microseconds/1000)
     if response.response:
         try:
             response.response[0] = response.response[0].replace('__EXECUTION_TIME__'.encode('utf-8'), execution_time_string.encode('utf-8'))

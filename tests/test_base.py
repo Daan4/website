@@ -30,20 +30,3 @@ class BaseTestCase(unittest.TestCase):
         db.session.rollback()
         db.session.close()
         self._ctx.pop()
-
-
-if __name__ == '__main__':
-    from tests.mod_auth_tests import TestAuth
-    from tests.mod_projects_tests import TestProjects
-    from tests.mod_streams_tests import TestStreams
-    from tests.mod_todo_tests import TestTodo
-    test_classes_to_run = [TestAuth,
-                           TestProjects,
-                           TestStreams,
-                           TestTodo]
-    # Run all test cases in test_classes_to_run
-    loader = unittest.TestLoader()
-    suites_list = [loader.loadTestsFromTestCase(x) for x in test_classes_to_run]
-    big_suite = unittest.TestSuite(suites_list)
-    runner = unittest.TextTestRunner()
-    results = runner.run(big_suite)
