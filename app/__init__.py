@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
-from flask_caching import Cache
 from .navigation import *
 import os
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -8,7 +7,6 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 db = SQLAlchemy()
 nav = MyNavigation()
 module_setup_functions = []
-cache = Cache()
 
 def create_app(config, disable_login=False):
     # Flask
@@ -20,9 +18,6 @@ def create_app(config, disable_login=False):
 
     # Fix for redirecting http to https
     app.wsgi_app = ProxyFix(app.wsgi_app)
-
-    # Cache
-    cache.init_app(app)
 
     # SQLAlchemy
     db.init_app(app)
