@@ -1,12 +1,11 @@
 from datetime import datetime
-from app import db, cache
+from app import db
 from flask import render_template, g, request, session, url_for, Blueprint, redirect, current_app
 
 mod_root = Blueprint('root', __name__, url_prefix='/')
 
 
 @mod_root.route('/', endpoint='index')
-@cache.cached()
 def index():
     return render_template('index.html')
 
@@ -18,8 +17,7 @@ def before_request():
     # Redirect to https when not running in debug mode
     if not current_app.debug and not request.is_secure:
         url = request.url.replace('http://', 'https://')
-        code = 301
-        return redirect(url, code=code)
+        return redirect(url, code=307)
 
 
 @mod_root.after_app_request

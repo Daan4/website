@@ -3,11 +3,13 @@ import unittest
 
 
 class BaseTestCase(unittest.TestCase):
+    disable_login = None
+    app = None
+    _ctx = None
+
     @classmethod
     def setUpClass(cls):
-        try:
-            cls.disable_login
-        except AttributeError:
+        if cls.disable_login is None:
             cls.disable_login = False
         cls.app = create_app('config.test_config', cls.disable_login)
         cls.client = cls.app.test_client()
@@ -19,7 +21,7 @@ class BaseTestCase(unittest.TestCase):
     def tearDownClass(cls):
         db.session.remove()
         db.drop_all()
-        db.get_engine(cls.app).dispose()
+        db.engine.dispose()
 
     def setUp(self):
         self._ctx = self.app.test_request_context()

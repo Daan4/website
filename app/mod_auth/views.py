@@ -1,6 +1,5 @@
 from flask import g, flash, redirect, url_for, request, render_template, Blueprint
 from .forms import *
-from app import cache
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -9,7 +8,6 @@ mod_auth = Blueprint('auth', __name__, url_prefix='/user', template_folder='temp
 
 
 @mod_auth.route('/login', methods=['GET', 'POST'], endpoint='login')
-@cache.cached()
 def login():
     if user_is_logged_in():
         flash('User {} is already logged in'.format(g.user.username))
@@ -35,7 +33,6 @@ def login():
 
 @mod_auth.route('/logout', endpoint='logout')
 @login_required
-@cache.cached()
 def logout():
     if user_is_logged_in():
         flash('User {} logged out.'.format(g.user.username))
@@ -47,7 +44,6 @@ def logout():
 
 @mod_auth.route('/signup', methods=['GET', 'POST'], endpoint='signup')
 @login_required  # Don't allow new signups by default
-@cache.cached()
 def signup():
     form = SignupForm()
     if form.validate_on_submit():
