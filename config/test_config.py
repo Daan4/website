@@ -18,7 +18,3 @@ SESSION_COOKIE_SAMESITE = 'STRICT'
 
 # testing
 TESTING = True
-
-# Cache settings
-CACHE_TYPE = "NullCache"
-CACHE_DEFAULT_TIMEOUT = 300

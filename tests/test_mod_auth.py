@@ -1,7 +1,9 @@
 from tests.test_base import BaseTestCase
 from app.mod_auth.models import User
 from app.mod_auth.views import user_is_logged_in
+from werkzeug.security import generate_password_hash
 from flask import url_for
+from flask_login import logout_user
 
 USERNAME = 'username'
 PASSWORD = 'password'
@@ -12,7 +14,7 @@ INVALID_PASSWORD = 'wrong_password'
 class TestAuth(BaseTestCase):
     def setUp(self):
         super().setUp()
-        User.create(username=USERNAME, password=PASSWORD)
+        User.create(username=USERNAME, password=generate_password_hash(PASSWORD))
 
     def login(self, username, password):
         return self.client.post(url_for('auth.login'), data=dict(
@@ -21,10 +23,11 @@ class TestAuth(BaseTestCase):
         ), follow_redirects=True)
 
     def logout(self):
-        return self.client.get(url_for('auth.logout', follow_redirects=True))
+        return self.client.get(url_for('auth.logout'), follow_redirects=True)
 
     def test_login(self):
         with self.client:
+            logout_user()
             self.login(INVALID_USERNAME, PASSWORD)
             self.assertFalse(user_is_logged_in())
             self.login(USERNAME, INVALID_PASSWORD)
@@ -36,6 +39,7 @@ class TestAuth(BaseTestCase):
 
     def test_logout(self):
         with self.client:
+            logout_user()
             self.login(USERNAME, PASSWORD)
             self.assertTrue(user_is_logged_in())
             self.logout()
