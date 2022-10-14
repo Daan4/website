@@ -17,8 +17,7 @@ def before_request():
     # Redirect to https when not running in debug mode
     if not current_app.debug and not request.is_secure:
         url = request.url.replace('http://', 'https://')
-        code = 301
-        return redirect(url, code=code)
+        return redirect(url, code=307)
 
 
 @mod_root.after_app_request
