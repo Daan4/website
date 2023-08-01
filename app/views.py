@@ -1,5 +1,5 @@
 from datetime import datetime
-from app import db
+#from app import db
 from flask import render_template, g, request, session, url_for, Blueprint, redirect, current_app
 
 mod_root = Blueprint('root', __name__, url_prefix='/')

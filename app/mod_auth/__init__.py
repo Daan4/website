@@ -16,9 +16,10 @@ def setup_module(app, nav, nav_bar):
     lm.init_app(app)
     lm.login_view = 'auth.login'
 
-    from .models import User
+#    from .models import User
 
     @lm.user_loader
     def load_user(id_):
-        return User.query.get(int(id_))
+        return None
+        #return User.query.get(int(id_))
 

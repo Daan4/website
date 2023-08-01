@@ -4,7 +4,7 @@ from .navigation import *
 import os
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-db = SQLAlchemy()
+#db = SQLAlchemy()
 nav = MyNavigation()
 module_setup_functions = []
 
@@ -20,7 +20,7 @@ def create_app(config, disable_login=False):
     app.wsgi_app = ProxyFix(app.wsgi_app)
 
     # SQLAlchemy
-    db.init_app(app)
+    #db.init_app(app)
 
     # Bootstrap
     Bootstrap(app)
